@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+}
+/* <=================================================================================================================================================================> */
+
+.music {
+  position: relative;
+  width: 450px;
+  min-height: 600px;
+  padding: 30px;
+  
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  flex-direction: column;
+  
+  border: 2px solid #fff;
+  border-radius: 40px;
+  background: #fbfbfb;
+  box-shadow: -30px -20px 25px 10px #fff,
+  30px 20px 25px 10px rgba(0, 0, 0, 0.05), 
+  inset 30px 20px 20px rgba(0, 0, 0, 0.05),
+  inset -30px -20px 20px #fff;
+}
+
+.music .icon {
+  position: absolute;
+  top: 25%;
+  transform: translateY(-50%);
+  /* background: red; */
+}
+
+.music .icon ion-icon {
+  width: 200px; height: 200px;
+  color: #38a7ff;
+}
+
+.music .title {
+  display: inline-flex;
+  margin-bottom: 20px;
+  
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.2em;
+  color: #38a7ff;
+}
+/* <=================================================================================================================================================================> */
+
+.music .player {
+  position: relative;
+  width: 400px;
+  /* min-height: 100px; */
+  padding: 10px 20px;
+  
+  background: #fbfbfb;
+  border: 2px solid #fff;
+  border-radius: 80px;
+  box-shadow: -10px -10px 15px #fff, 10px 10px 15px rgba(0, 0, 0, 0.1),
+  inset 5px 5px 15px rgba(0, 0, 0, 0.1), inset -5px -5px 15px #fff;
+}
+
+/* Buttons are claymorphic, not neumorphic */
+.music .player .buttons {
+  position: relative;
+  width: 100%;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.buttons span {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #fff;
+  
+  color: #777;
+  cursor: pointer;
+  box-shadow: inset 0 -5px 5px rgba(0, 0, 0, 0.1),
+  0 5px 10px rgba(0, 0, 0, 0.1),
+  0 10px 15px rgba(0, 0, 0, 0.1); /* Light source seems to be at the top-center */
+}
+
+/* .music .player .buttons span.playPause {
+  width: 70px; height: 70px;
+} */
+
+.music .player .buttons span:active,
+.music .player .buttons span.active {
+  color: #ff669a;
+  box-shadow: inset 0 -7px 5px rgba(0, 0, 0, 0.025),
+  inset 0 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.music .player .buttons span ion-icon {
+  font-size: 1.25em;
+}
+
+.music .player .buttons span.playPause ion-icon {
+  font-size: 2em;
+}
+/* <=================================================================================================================================================================> */
+
+.music .duration {
+  position: relative;
+  width: 400px; height: 15px;
+  margin-top: 30px;
+}
+
+.music .duration .duration-slider {
+  position: absolute;
+  top: 0; left: 0;
+  appearance: none;
+  outline: none;
+
+  width: 300px; height: 15px;
+  background: linear-gradient(to top, #fff 50%, rgba(119, 119, 119, 0.125));
+  border-radius: 15px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 
+  -5px -5px 5px #fff;
+}
+
+.music .duration .duration-slider::-webkit-slider-thumb {
+  appearance: none;
+  cursor: pointer;
+  
+  position: relative;
+  z-index: 99;
+  width: 25px; height: 25px;
+  
+  background: #38a7ff;
+  border: 1px solid #33a3ff;
+  border-radius: 50%;
+  opacity: .5;
+  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1), 
+              5px 5px 5px rgba(0, 0, 0, .1), 
+              inset -5px -5px 5px rgba(255, 255, 255, 0.15), 
+              inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+  
+}
+
+.music .duration .filled {
+  position: absolute;
+  z-index: 1;
+  top: 0; 
+  left: 12.5px;
+  width: 275px; 
+  height: 15px;
+  
+  /* border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px; */
+  border-radius: 15px;
+  background: #38a7ff;
+  box-shadow: inset -5px -5px 5px rgba(255, 255, 255, 0.15), 
+              inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+  /* <=================================================================================================================================================================> */
+
+.music .duration .time {
+  position: absolute;
+  top: -45%; right: 0%;
+  padding: 4px 10px;
+
+  text-align: center;
+  font-size: 1em;
+  font-weight: 400;
+  color: #fff;
+
+  background: #38a7ff;
+  border-radius: 25px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), 
+              -5px -5px 10px #fff,
+              inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+              inset -5px -5px 5px rgba(255, 255, 255, 0.075);
+}
