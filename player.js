@@ -5,11 +5,11 @@ function playerMech() {
   const playPause = document.querySelector('.playPause');
   const next = document.querySelector('.next');
   const audio = document.querySelector('audio');
-  const durSlider = document.querySelector('.duration-range');
-  const durSliderFill = document.querySelector('.filled');
+  const durSlider = document.querySelector('.duration-slider');
+  const durSliderFill = document.querySelector('.sliderFill');
 
   let songPlaying = false;
-  let currSongIndex = 3;
+  let currSongIndex = 0;
   
   //song list - idea for next versions -> use DB or API
   const songList = [
@@ -31,12 +31,38 @@ function playerMech() {
     }
   ];
   
+  // Song Loading mechanism ~ selection of path and name
+  function loadSong(songListElement) {
+    title.textContent = songListElement.songName;
+    audio.src = songListElement.path;
+  }
+  loadSong(songList[currSongIndex]);  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
+  // also song is loaded outside rather than inside playSong is to preemptively show a title. Can be changed in further versions
+  
   // Buttons Functionality
   function playSong() {
     songPlaying = true;
     audio.play();
     playPause.classList.add('active');
     playPause.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
+    
+    function durationSliderAuto() {
+      let sliderWidth = parseFloat(window.getComputedStyle(durSlider).getPropertyValue('width'));
+      let intervalSpan = 1000;
+      durSlider.max = audio.duration
+      let widthIncrement = ((sliderWidth - 25) / durSlider.max) * (intervalSpan / 1000);
+      
+      let durationIntv = setInterval(() => {
+        durSlider.value = audio.currentTime;
+        console.log(durSlider.value);
+        durSliderFill.style.width = `${parseFloat(window.getComputedStyle(durSliderFill).getPropertyValue('width')) + widthIncrement}px`;
+        
+        if(audio.ended === true) {
+          clearInterval(durationIntv);
+        }
+      }, intervalSpan);
+    }
+    durationSliderAuto();
   }
   
   function pauseSong() {
@@ -47,14 +73,14 @@ function playerMech() {
   }
   playPause.addEventListener('click', () => {
     songPlaying ? pauseSong(): playSong(); 
-    // since we had to do the condition checking, callback function was written which'll after checking status call the appropriate function
-    // if there was no additional lines of code then the functions would've been directly passed as callbacks (no '()')
+    // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
+    // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
   })
+
   
-  // Handling normal song end
+  // Handling song end -> future idea, add repeat, shuffle buttons which will affect the behaviour after a song ends
   audio.onended = () => {
-    playPause.classList.remove('active')
-    playPause.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+    pauseSong();
   }
 
   function prevSong() {
@@ -70,14 +96,5 @@ function playerMech() {
     playSong();
   }
   next.addEventListener('click', nextSong);
-  
-  // Song Loading mechanism
-  function loadSong(songList) {
-    title.textContent = songList.songName;
-    audio.src = songList.path;
-  }
-
-  // Initial Loading
-  loadSong(songList[currSongIndex]);
 } 
 playerMech();

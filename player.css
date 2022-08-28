@@ -152,6 +152,7 @@ body {
   
   /* border: 1px solid yellow; */ /* debugging purposes */
   background: #38a5ff;
+  opacity: .5;
   border: 1px solid #38a7ff;
   border-radius: 50%;
   box-shadow: -5px -5px 10px rgba(255, 255, 255, .15), 
