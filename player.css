@@ -128,12 +128,13 @@ body {
 
 .music .duration .duration-slider {
   --thumb-width: 25px;
-  position: absolute;
-  top: 0; left: 0;
   appearance: none;
   outline: none;
 
+  position: absolute;
+  top: 0; left: 0;
   width: 300px; height: 15px;
+
   background: linear-gradient(to top, #fff 50%, rgba(119, 119, 119, 0.125));
   /* background: black; */ /* debugging purposes */
   border-radius: 15px;
@@ -149,13 +150,12 @@ body {
   z-index: 99;
   width: 25px; height: 25px;
   
-  background: #38a5ff;
   /* border: 1px solid yellow; */ /* debugging purposes */
+  background: #38a5ff;
   border: 1px solid #38a7ff;
   border-radius: 50%;
-  opacity: .5;
-  box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1), 
-              5px 5px 5px rgba(0, 0, 0, .1), 
+  box-shadow: -5px -5px 10px rgba(255, 255, 255, .15), 
+              5px 5px 10px rgba(0, 0, 0, .15), 
               inset -5px -5px 5px rgba(255, 255, 255, 0.15), 
               inset 5px 5px 5px rgba(0, 0, 0, 0.1);
   
@@ -163,23 +163,37 @@ body {
 
 .music .duration .sliderFill {
   position: absolute;
-  z-index: 1;
-  pointer-events: none; /* it's stacked above the slider which obstrcuted tap-events when filling was non-zero, this makes sliderFill 'pass-through' for events, event will be therefore triggered on the slider */
+  z-index: 2;
   top: 0; 
   left: 12.5px;
   height: 15px;
   
-  border-radius: 15px;
   /* background: red; */ /* debugging purposes */
-  background: #38a5ff;
-  box-shadow: inset -5px -5px 5px rgba(255, 255, 255, 0.15), 
-              inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background: #38a7ff;
+  pointer-events: none;     /* it's stacked above the slider which obstrcuted tap-events when filling was non-zero, this makes sliderFill 'pass-through' for events, event will be therefore triggered on the slider */
+}
+
+.music .duration .sliderFill::before { /* For the left-side 12.5px which was omitted by centre-to-centre approach for sliderFill */
+  /* I tried keeping the left 12.5px directly but it always made the sliderFill to just touch the thumb's left extreme while sliding */
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0; 
+  left: -12.5px;
+  width: 15px; height: 15px;
+  
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  background: #38a7ff;
 }
   /* <=================================================================================================================================================================> */
 
 .music .duration .time {
   position: absolute;
-  top: -45%; right: 0%;
+  top: 0; right: 0;
+  transform: translateY(-25%);
   padding: 4px 10px;
 
   text-align: center;
