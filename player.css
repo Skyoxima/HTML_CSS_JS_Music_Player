@@ -127,6 +127,7 @@ body {
 }
 
 .music .duration .duration-slider {
+  --thumb-width: 25px;
   position: absolute;
   top: 0; left: 0;
   appearance: none;
@@ -134,6 +135,7 @@ body {
 
   width: 300px; height: 15px;
   background: linear-gradient(to top, #fff 50%, rgba(119, 119, 119, 0.125));
+  /* background: black; */ /* debugging purposes */
   border-radius: 15px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1), 
   -5px -5px 5px #fff;
@@ -147,8 +149,9 @@ body {
   z-index: 99;
   width: 25px; height: 25px;
   
-  background: #38a7ff;
-  border: 1px solid #33a3ff;
+  background: #38a5ff;
+  /* border: 1px solid yellow; */ /* debugging purposes */
+  border: 1px solid #38a7ff;
   border-radius: 50%;
   opacity: .5;
   box-shadow: -5px -5px 5px rgba(255, 255, 255, 0.1), 
@@ -158,18 +161,17 @@ body {
   
 }
 
-.music .duration .filled {
+.music .duration .sliderFill {
   position: absolute;
   z-index: 1;
+  pointer-events: none; /* it's stacked above the slider which obstrcuted tap-events when filling was non-zero, this makes sliderFill 'pass-through' for events, event will be therefore triggered on the slider */
   top: 0; 
   left: 12.5px;
-  width: 275px; 
   height: 15px;
   
-  /* border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px; */
   border-radius: 15px;
-  background: #38a7ff;
+  /* background: red; */ /* debugging purposes */
+  background: #38a5ff;
   box-shadow: inset -5px -5px 5px rgba(255, 255, 255, 0.15), 
               inset 5px 5px 5px rgba(0, 0, 0, 0.1);
 }

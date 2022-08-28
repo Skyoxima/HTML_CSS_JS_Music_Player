@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neumorphism Music Player (Functional)</title>
-    <link rel="stylesheet" href="NMmusic_player.css">
+    <link rel="stylesheet" href="player.css">
   </head>
 
   <body>
@@ -23,14 +23,13 @@
       </div>
       
       <div class="duration">
-        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" max="100" />
-        <div class="filled"></div>
+        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" max="100"/>
+        <div class="sliderFill"></div>
         <span class="time">00:00</span>
       </div>
     </div>
-    <!-- <script src="NMmusic_player.js"></script> -->
-    <!-- <script src="durationSliderFill.js"></script> -->
-    <!-- <script src="newManualDurationSliderControl.js"></script> -->
+    <!-- <script src="player.js"></script> -->
+    <script src="sliderManualControl.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>
