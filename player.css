@@ -148,7 +148,7 @@ body {
   
   position: relative;
   z-index: 99;
-  width: 25px; height: 25px;
+  width: var(--thumb-width); height: 25px;
   
   /* border: 1px solid yellow; */ /* debugging purposes */
   background: #38a5ff;
