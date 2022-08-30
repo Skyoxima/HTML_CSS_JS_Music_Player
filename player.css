@@ -120,19 +120,25 @@ body {
 }
 /* <=================================================================================================================================================================> */
 
-.music .duration {
+.music .duration .sliderIcon,
+.music .volume .sliderIcon {
+  color: #38a5ff;
+}
+
+.music .duration, .music .volume {
   position: relative;
   width: 400px; height: 15px;
   margin-top: 30px;
 }
 
-.music .duration .duration-slider {
+.music .duration .duration-slider,
+.music .volume .volume-slider {
   --thumb-width: 25px;
   appearance: none;
   outline: none;
 
   position: absolute;
-  top: 0; left: 0;
+  top: 0; left: 20px;
   width: 300px; height: 15px;
 
   background: linear-gradient(to top, #fff 50%, rgba(119, 119, 119, 0.125));
@@ -142,7 +148,8 @@ body {
   -5px -5px 5px #fff;
 }
 
-.music .duration .duration-slider::-webkit-slider-thumb {
+.music .duration .duration-slider::-webkit-slider-thumb,
+.music .volume .volume-slider::-webkit-slider-thumb {
   appearance: none;
   cursor: pointer;
   
@@ -162,11 +169,12 @@ body {
   
 }
 
-.music .duration .sliderFill {
+.music .duration .durSliderFill,
+.music .volume .volSliderFill {
   position: absolute;
   z-index: 2;
   top: 0; 
-  left: 12.5px;
+  left: 32.5px;
   height: 15px;
   
   /* background: red; */ /* debugging purposes */
@@ -176,7 +184,8 @@ body {
   pointer-events: none;     /* it's stacked above the slider which obstrcuted tap-events when filling was non-zero, this makes sliderFill 'pass-through' for events, event will be therefore triggered on the slider */
 }
 
-.music .duration .sliderFill::before { /* For the left-side 12.5px which was omitted by centre-to-centre approach for sliderFill */
+.music .duration .durSliderFill::before,
+.music .volume .volSliderFill::before { /* For the left-side 12.5px which was omitted by centre-to-centre approach for sliderFill */
   /* I tried keeping the left 12.5px directly but it always made the sliderFill to just touch the thumb's left extreme while sliding */
   content: '';
   position: absolute;
@@ -189,23 +198,24 @@ body {
   border-bottom-left-radius: 15px;
   background: #38a7ff;
 }
-  /* <=================================================================================================================================================================> */
-
-.music .duration .time {
-  position: absolute;
-  top: 0; right: 0;
-  transform: translateY(-25%);
+/* <=================================================================================================================================================================> */
+  
+  .music .duration .time {
+    position: absolute;
+    top: 0; right: 0;
+    transform: translateY(-25%);
   padding: 4px 10px;
 
   text-align: center;
   font-size: 1em;
   font-weight: 400;
   color: #fff;
-
+  
   background: #38a7ff;
   border-radius: 25px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2), 
-              -5px -5px 10px #fff,
-              inset 5px 5px 10px rgba(0, 0, 0, 0.1),
-              inset -5px -5px 5px rgba(255, 255, 255, 0.075);
+  -5px -5px 10px #fff,
+  inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+  inset -5px -5px 5px rgba(255, 255, 255, 0.075);
 }
+/* <=================================================================================================================================================================> */

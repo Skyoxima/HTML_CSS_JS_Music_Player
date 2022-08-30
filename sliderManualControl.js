@@ -1,5 +1,5 @@
 let slider = document.querySelector('.duration-slider');
-let sliderFill = document.querySelector('.sliderFill');
+let sliderFill = document.querySelector('.durSliderFill');
 
 let sliderWidth = parseFloat(window.getComputedStyle(slider).getPropertyValue('width'))
 let thumbWidth = 25;

@@ -6,7 +6,7 @@ function playerMech() {
   const next = document.querySelector('.next');
   const audio = document.querySelector('audio');
   const durSlider = document.querySelector('.duration-slider');
-  const durSliderFill = document.querySelector('.sliderFill');
+  const durSliderFill = document.querySelector('.durSliderFill');
   const thumbWidth = parseInt(window.getComputedStyle(durSlider).getPropertyValue('--thumb-width'));
   
   let songPlaying = false;
