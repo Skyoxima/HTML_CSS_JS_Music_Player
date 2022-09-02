@@ -1,8 +1,8 @@
 let slider = document.querySelector('.duration-slider');
 let sliderFill = document.querySelector('.durSliderFill');
 
-let sliderWidth = parseFloat(window.getComputedStyle(slider).getPropertyValue('width'))
-let thumbWidth = 25;
+let sliderWidth = parseFloat(window.getComputedStyle(slider).getPropertyValue('width'));
+let thumbWidth = parseInt(window.getComputedStyle(slider).getPropertyValue('--thumb-dimension'));
 let widthIncrement = (sliderWidth - thumbWidth) / slider.max;
 let prevSliderValue = slider.value;
 

@@ -18,22 +18,37 @@ function changeVolume(newValue) {
 }
 
 function volSliderControl() {
+  const volumeRef = document.querySelector('.volume');
   const sliderRef = document.querySelector('.volume-slider');
   const sliderFillRef = document.querySelector('.volSliderFill');  
-  const sliderWidth = parseFloat(window.getComputedStyle(sliderRef).getPropertyValue('width'));
+  const sliderIconRef = document.querySelector('.volume .sliderIcon')
 
-  const thumbWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('--thumb-width'));
-  const widthIncrement = (sliderWidth - thumbWidth) / sliderRef.max;
+  const sliderWidth = parseFloat(window.getComputedStyle(sliderRef).getPropertyValue('width'));
+  const thumbWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('--thumb-dimension'));
+  const widthIncrement = (sliderWidth - thumbWidth) / 100;
   let prevSliderValue = sliderRef.value; // initial which later acts as previous
   sliderFillRef.style.width = `${parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width')) + (widthIncrement * (prevSliderValue))}px`;
-  console.log(prevSliderValue);
+  let prevSliderFillWidth =  parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width'));
 
   sliderRef.addEventListener('input', function() {
-    changeVolume(sliderRef.value)
-    console.log(sliderRef.value)
-    sliderFillRef.style.width = `${parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width')) + (widthIncrement * (sliderRef.value - prevSliderValue))}px`;
+    sliderFillRef.style.width = `${prevSliderFillWidth + (widthIncrement * (sliderRef.value - prevSliderValue))}px`;
+    prevSliderFillWidth = parseFloat(sliderFillRef.style.width);
+    // console.log(prevSliderFillWidth);
+    changeVolume(sliderRef.value);
     prevSliderValue = sliderRef.value; 
   })
+
+  sliderIconRef.addEventListener('click', () => {
+    sliderIconRef.classList.add('active');
+    volumeRef.style.setProperty('--after-width', '0%');
+
+    volumeRef.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        sliderIconRef.classList.remove('active');
+        volumeRef.style.setProperty('--after-width', '100%');
+      }, 5000);
+    }) // remember the difference between mouseout and mouseleave
+  });
 }
 
 volSliderControl();

@@ -10,9 +10,24 @@
 
   <body>
     <div class="music">
-      <div class="icon"><ion-icon name="musical-note-outline"></ion-icon></div>
+      <div class="volume">
+        <span class="sliderIcon" id="vol-icon"><ion-icon name="volume-high-outline"></ion-icon></span>
+        <input type="range" class="volume-slider" id="volume-range-slider" min="0" value="80" max="100"/>
+        <div class="volSliderFill"></div>
+      </div>
+      
+      <div class="main-icon"><ion-icon name="musical-notes-outline"></ion-icon></div>
       <h2 class="title">Music Name</h2>
       
+      <div class="duration">
+        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" step="0.01" max="100"/>
+        <div class="durSliderFill"></div>
+        <div class="durSliderTxt">
+          <span class="leftText">00:00</span>
+          <span class="rightText">00:00</span>
+        </div>
+      </div>
+
       <div class="player">
         <audio src=""></audio>
         <div class="buttons">
@@ -21,24 +36,11 @@
           <span class="next"><ion-icon name="play-forward-outline"></ion-icon></span>
         </div>
       </div>
-      
-      <div class="duration">
-        <span class="sliderIcon"><ion-icon name="time-outline"></ion-icon></span>
-        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" step="0.01" max="100"/>
-        <div class="durSliderFill"></div>
-        <!-- <span class="time">00:00</span> -->
-      </div>
-      
-      <div class="volume">
-        <span class="sliderIcon" id="vol-icon"><ion-icon name="volume-high-outline"></ion-icon></span>
-        <input type="range" class="volume-slider" id="volume-range-slider" min="0" value="80" max="100"/>
-        <div class="volSliderFill"></div>
-      </div>
     </div>
-
+    
     <!-- <script src="redoplayer.js"></script> -->
     <script src="player.js"></script>
-    <!-- <script src="sliderManualControl.js"></script> -->
+    <script src="sliderManualControl.js"></script>
     <script src="volumeSlider.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
