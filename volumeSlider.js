@@ -31,11 +31,21 @@ function volSliderControl() {
   let prevSliderFillWidth =  parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width'));
 
   sliderRef.addEventListener('input', function() {
-    sliderFillRef.style.width = `${prevSliderFillWidth + (widthIncrement * (sliderRef.value - prevSliderValue))}px`;
-    prevSliderFillWidth = parseFloat(sliderFillRef.style.width);
-    // console.log(prevSliderFillWidth);
-    changeVolume(sliderRef.value);
-    prevSliderValue = sliderRef.value; 
+    if(prevSliderValue !== sliderRef.value) {
+      
+      if(sliderRef.value === '100') {
+        sliderFillRef.style.width = '285px';
+      } else if(sliderRef.value === '0') {
+        sliderFillRef.style.width = '0px';
+      } else {
+        sliderFillRef.style.width = `${prevSliderFillWidth + (widthIncrement * (sliderRef.value - prevSliderValue))}px`;
+      }
+
+      prevSliderFillWidth = parseFloat(sliderFillRef.style.width);
+      console.log(prevSliderFillWidth);
+      changeVolume(sliderRef.value);
+      prevSliderValue = sliderRef.value; 
+    } // all these extra if checks are for reducing that rapid-slide bug
   })
 
   sliderIconRef.addEventListener('click', () => {
