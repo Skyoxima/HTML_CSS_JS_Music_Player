@@ -23,29 +23,28 @@ function volSliderControl() {
   const sliderFillRef = document.querySelector('.volSliderFill');  
   const sliderIconRef = document.querySelector('.volume .sliderIcon')
 
-  const sliderWidth = parseFloat(window.getComputedStyle(sliderRef).getPropertyValue('width'));
+  const sliderWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('width'));
   const thumbWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('--thumb-dimension'));
   const widthIncrement = (sliderWidth - thumbWidth) / 100;
-  let prevSliderValue = sliderRef.value; // initial which later acts as previous
-  sliderFillRef.style.width = `${parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width')) + (widthIncrement * (prevSliderValue))}px`;
+  let prevSliderValue = parseFloat(sliderRef.value); // initial which later acts as previous
+  sliderFillRef.style.width = `${parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width')) + (widthIncrement * (prevSliderValue))}px`;  // to get it to correspond 80% volume value initially
   let prevSliderFillWidth =  parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width'));
 
   sliderRef.addEventListener('input', function() {
-    if(prevSliderValue !== sliderRef.value) {
-      
-      if(sliderRef.value === '100') {
-        sliderFillRef.style.width = '285px';
-      } else if(sliderRef.value === '0') {
+    let currSliderValue = parseFloat(sliderRef.value);  // not relying on implicit type conversion
+    if(prevSliderValue !== currSliderValue) { // this condition was added to only trigger width change on value change as same values were most likely causing the bug
+      if(currSliderValue === 100) {
+        sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
+      } else if(currSliderValue === 0) {
         sliderFillRef.style.width = '0px';
       } else {
-        sliderFillRef.style.width = `${prevSliderFillWidth + (widthIncrement * (sliderRef.value - prevSliderValue))}px`;
+        sliderFillRef.style.width = `${prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue))}px`;
       }
-
       prevSliderFillWidth = parseFloat(sliderFillRef.style.width);
-      console.log(prevSliderFillWidth);
+      // console.log(prevSliderFillWidth);
+      prevSliderValue = currSliderValue; 
       changeVolume(sliderRef.value);
-      prevSliderValue = sliderRef.value; 
-    } // all these extra if checks are for reducing that rapid-slide bug
+    } // all these extra if checks are for eliminating that rapid-slide bug
   })
 
   sliderIconRef.addEventListener('click', () => {
@@ -53,10 +52,15 @@ function volSliderControl() {
     volumeRef.style.setProperty('--after-width', '0%');
 
     volumeRef.addEventListener('mouseleave', () => {
-      setTimeout(() => {
+      let hideSliderTimeout = setTimeout(() => {
         sliderIconRef.classList.remove('active');
         volumeRef.style.setProperty('--after-width', '100%');
-      }, 5000);
+      }, 2500);
+      
+      // to pause the timeout when re-entering the slider
+      volumeRef.addEventListener('mouseenter', () => {
+        clearTimeout(hideSliderTimeout);
+      });
     }) // remember the difference between mouseout and mouseleave
   });
 }
