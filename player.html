@@ -11,7 +11,7 @@
   <body>
     <div class="music">
       <div class="volume">
-        <span class="sliderIcon active" id="vol-icon"><ion-icon name="volume-high-outline"></ion-icon></span>
+        <span class="sliderIcon" id="vol-icon"><ion-icon name="volume-high-outline"></ion-icon></span>
         <input type="range" class="volume-slider" id="volume-range-slider" min="0" value="80" max="100"/>
         <div class="volSliderFill"></div>
       </div>
@@ -23,8 +23,8 @@
         <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" step="0.01" max="100"/>
         <div class="durSliderFill"></div>
         <div class="durSliderTxt">
-          <span class="leftText">00:00</span>
-          <span class="rightText">00:00</span>
+          <span class="elapsedTime">00:00</span>
+          <span class="remainingTime">00:00</span>
         </div>
       </div>
 
@@ -40,7 +40,7 @@
     
     <!-- <script src="redoplayer.js"></script> -->
     <script src="player.js"></script>
-    <script src="durSliderManualControl.js"></script>
+    <script src="durSliderControl.js"></script>
     <script src="volSliderManualControl.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

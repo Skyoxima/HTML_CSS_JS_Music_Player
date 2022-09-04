@@ -15,7 +15,7 @@ sliderRef.addEventListener('input', function() {
     currSliderValue === 0 ? currSliderFillWidth = 0 
                           : currSliderValue === sliderRef.max ? currSliderFillWidth = sliderWidth - thumbWidth
                                                               : currSliderFillWidth = (prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue)));  
-    
+    // lhs = rhs is an assignment expression and is a valid expression for ? in JS [NOT in C though]
     sliderFillRef.style.width = `${currSliderFillWidth}px`
     prevSliderValue = currSliderValue;
     prevSliderFillWidth = currSliderFillWidth;

@@ -1,16 +1,17 @@
 function playerMech() {
   // fetching DOM elements
-  const title = document.querySelector('.title');
-  const prev = document.querySelector('.prev');
-  const playPause = document.querySelector('.playPause');
-  const next = document.querySelector('.next');
-  const audio = document.querySelector('audio');
-  const durSlider = document.querySelector('.duration-slider');
-  const durSliderFill = document.querySelector('.durSliderFill');
-  const thumbWidth = parseInt(window.getComputedStyle(durSlider).getPropertyValue('--thumb-width'));
+  const titleRef = document.querySelector('.title');
+  const prevBtnRef = document.querySelector('.prev');
+  const playPauseBtnRef = document.querySelector('.playPause');
+  const nextBtnRef = document.querySelector('.next');
+  const audioRef = document.querySelector('audio');
+  // const durSliderRef = document.querySelector('.duration-slider');
+  // const durSliderFillRef = document.querySelector('.durSliderFill');
   
   let songPlaying = false;
   let currSongIndex = 3;
+  // let sliderWidth = parseFloat(window.getComputedStyle(durSliderRef).getPropertyValue('width'));
+  // let thumbWidth = parseInt(window.getComputedStyle(durSliderRef).getPropertyValue('--thumb-dimension'));
   
   //song list - idea for next versions -> use DB or API
   const songList = [
@@ -34,88 +35,63 @@ function playerMech() {
   
   // Song Loading mechanism ~ selection of path and name
   function loadSong(songListElement) {
-    title.textContent = songListElement.songName;
-    audio.src = songListElement.path;
+    titleRef.textContent = songListElement.songName;
+    audioRef.src = songListElement.path;
   }
   loadSong(songList[currSongIndex]);  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
   // also song is loaded outside rather than inside playSong is to preemptively show a title. Can be changed in further versions
   
-  // audio slider functionality
-  function durationSliderAuto(audioRef) {
-    let sliderWidth = parseFloat(window.getComputedStyle(durSlider).getPropertyValue('width'));
-    let intervalSpan = 1000;
-    
-    durSlider.max = audioRef.duration;
-    let widthIncrement = ((sliderWidth - thumbWidth) / durSlider.max) * (intervalSpan / 1000); // divided by 1000 because that is the default interval span
-    
-    let durationIntv = setInterval(() => {
-      durSlider.value = audioRef.currentTime;
-      durSliderFill.style.width = `${parseFloat(window.getComputedStyle(durSliderFill).getPropertyValue('width')) + widthIncrement}px`;
-      console.log(durSlider.value);
-      
-      if(audioRef.ended === true || audioRef.paused === true) {
-        clearInterval(durationIntv);
-      }
-    }, intervalSpan);
-    
-    return durationIntv;
-  }
-
   // Buttons Functionality
   function playSong() {
     songPlaying = true;
-    audio.play();
-    let intervalId = durationSliderAuto(audio);
-    playPause.classList.add('active');
-    playPause.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
-    
-    return intervalId;
+    audioRef.play();
+    playPauseBtnRef.classList.add('active');
+    playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
   }
 
   function pauseSong() {
     songPlaying = false;
-    audio.pause();
-    playPause.classList.remove('active');
-    playPause.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
-    
-    return null;
+    audioRef.pause();
+    playPauseBtnRef.classList.remove('active');
+    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
   }
   
-  let intervalId = playPause.addEventListener('click', () => {
-    let intervalId = songPlaying ? pauseSong() : playSong(); 
+  playPauseBtnRef.addEventListener('click', () => {
+    if(songPlaying) {
+      pauseSong();
+    } else {
+      playSong();
+      // durSliderRef.max = audioRef.duration;
+      // let widthIncrement = (sliderWidth - thumbWidth) / durSliderRef.max;
+      // let autoSlide = setInterval(() => {
+      //   console.log('In-terval');
+      //   durSliderRef.value = audioRef.currentTime;
+      //   currSliderFillWidth = prevSliderFillWidth + (widthIncrement)
+      // }, 1000);
+    }
     // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
-    console.log(intervalId);
-  })
+  });
   
   // Handling song end -> future idea, add repeat, shuffle buttons which will affect the behaviour after a song ends
-  audio.onended = () => {
+  audioRef.onended = () => {
     pauseSong();
-  }
-
-  function durationSliderReset(intervalId) {
-    console.log('Inside reset')
-    // console.log(intervalId)
-    // audio.ended === true // this will then be picked up by the SetInterval at it's next interval and the clearInterval block will run
-    clearInterval(intervalId);
-    durSliderFill.style.width = '0px';
-    durSlider.value = 0;
   }
 
   function prevSong() {
     currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
-    durationSliderReset(intervalId); // before loading the prev/next song, make sure to reset everything that's done by the previous song
     loadSong(songList[currSongIndex]);
     playSong();
   }
-  prev.addEventListener('click', prevSong);
+  prevBtnRef.addEventListener('click', prevSong);
   
   function nextSong() {
     currSongIndex < songList.length - 1 ? currSongIndex++ : currSongIndex = 0;
-    durationSliderReset(intervalId);
     loadSong(songList[currSongIndex]);
     playSong();
   }
-  next.addEventListener('click', nextSong);
-} 
+  nextBtnRef.addEventListener('click', nextSong);
+}
+
+
 playerMech();
