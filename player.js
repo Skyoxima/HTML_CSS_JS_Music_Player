@@ -40,6 +40,11 @@ function playerMech() {
   // Buttons Functionality
   function playSong() {
     songPlaying = true;
+    //! to have the duration load first -- this is probably a makeshift solution
+    //? This is makeshift because it depends on the device strength of the user I think
+    // setTimeout(() => {
+    //   audioRef.play();
+    // }, 50)
     audioRef.play();
     playPauseBtnRef.classList.add('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
