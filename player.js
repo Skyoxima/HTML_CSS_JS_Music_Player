@@ -5,13 +5,9 @@ function playerMech() {
   const playPauseBtnRef = document.querySelector('.playPause');
   const nextBtnRef = document.querySelector('.next');
   const audioRef = document.querySelector('audio');
-  // const durSliderRef = document.querySelector('.duration-slider');
-  // const durSliderFillRef = document.querySelector('.durSliderFill');
   
   let songPlaying = false;
   let currSongIndex = 3;
-  // let sliderWidth = parseFloat(window.getComputedStyle(durSliderRef).getPropertyValue('width'));
-  // let thumbWidth = parseInt(window.getComputedStyle(durSliderRef).getPropertyValue('--thumb-dimension'));
   
   //song list - idea for next versions -> use DB or API
   const songList = [
@@ -61,13 +57,6 @@ function playerMech() {
       pauseSong();
     } else {
       playSong();
-      // durSliderRef.max = audioRef.duration;
-      // let widthIncrement = (sliderWidth - thumbWidth) / durSliderRef.max;
-      // let autoSlide = setInterval(() => {
-      //   console.log('In-terval');
-      //   durSliderRef.value = audioRef.currentTime;
-      //   currSliderFillWidth = prevSliderFillWidth + (widthIncrement)
-      // }, 1000);
     }
     // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
