@@ -98,7 +98,7 @@ body {
 
 .music .title {
   display: inline-flex;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   text-align: center;
   font-weight: 400;
@@ -106,90 +106,16 @@ body {
   color: var(--player-highlight-1);
 }
 
-/** [Buttons] <=================================================================================================================================================================> */
-.music .player {
+/** [Duration Text] <=================================================================================================================================================================> */
+.music .durSliderTxt {
   position: relative;
-  width: 400px;
-  padding: 10px 20px;
-
-  background: linear-gradient(
-      var(--player-bg), 
-      var(--player-bg)
-    ) padding-box,
-    linear-gradient(
-      to top left, 
-      var(--big-button-border-∇-d), 
-      var(--player-bg)
-      ) border-box;
-  border: 1px solid transparent;
-  border-radius: 80px;
-  box-shadow: 
-  -5px -5px 10px rgba(255, 255, 255, 1),
-  5px 5px 10px rgba(173, 187, 211, .9),
-  inset 6px 3px 10px rgba(255, 255, 255, .75);
-}
-
-.music .player .buttons {
-  position: relative;
-  width: 100%;
-
-  display: flex; justify-content: space-evenly; align-items: center;
-}
-
-.buttons span {
-  position: relative;
-  width: 60px;
-  height: 60px;
-  display: flex; justify-content: center; align-items: center;
-
-  border: 2px solid transparent;
-  border-radius: 50%;
-  background: radial-gradient(
-      var(--player-bg), 
-      var(--player-bg)
-    ) padding-box,
-    radial-gradient(
-      var(--player-highlight-1) 0%,
-      var(--player-highlight-1) 60%,
-      var(--player-bg) 70%
-    ) border-box;
-
-  box-shadow: 
-  -5px -5px 10px rgba(255, 255, 255, .95),
-  5px 5px 10px rgba(173, 187, 211, .65),
-  inset 7px 7px 8px rgba(255, 255, 255, 0.9),
-  inset -2px -2px 8px rgba(255, 255, 255, 0.9);
-    
-  color: var(--player-highlight-1);
-  cursor: pointer;  
-}
-
-.music .player .buttons span:active,
-.music .player .buttons span.active {
-  color: var(--player-bg);
-  border: 1px solid transparent;
-  background: linear-gradient(
-      var(--player-highlight-1), 
-      var(--player-highlight-1)
-    ) padding-box,
-    linear-gradient(
-      to bottom right, 
-      #758dfb, 
-      #90adfe
-    ) border-box;
-  box-shadow: 
-  inset 5px 5px 10px rgba(98, 135, 255, 1),
-  inset -1px -1px 5px rgba(98, 135, 255, 0.5),
-  7px 7px 10px rgba(255, 255, 255, .9),
-  -7px -7px 10px rgba(0, 0, 0, 0.1);
-}
-
-.music .player .buttons span ion-icon {
-  font-size: 1.25em;
-}
-
-.music .player .buttons span.playPause ion-icon {
-  font-size: 1.75em;
+  width: 300px;
+  margin-bottom: 10px;
+  display: flex; justify-content: space-between;
+  
+  font-size: 12px;
+  font-weight: 200;
+  color: var(--button-shadow-∇-d);
 }
 
 /** [Duration and Volume Slider] <=================================================================================================================================================================> */
@@ -353,15 +279,92 @@ body {
   background: var(--player-highlight-1);
 }
 
-.music .duration .durSliderTxt {
+/** [Buttons] <=================================================================================================================================================================> */
+.music .player {
   position: relative;
-  top: 10px;
-  display: flex; justify-content: space-between;
-  
-  font-size: 9px;
-  font-weight: 200;
-  color: var(--button-shadow-∇-d);
+  width: 400px;
+  padding: 10px 20px;
+
+  background: linear-gradient(
+      var(--player-bg), 
+      var(--player-bg)
+    ) padding-box,
+    linear-gradient(
+      to top left, 
+      var(--big-button-border-∇-d), 
+      var(--player-bg)
+      ) border-box;
+  border: 1px solid transparent;
+  border-radius: 80px;
+  box-shadow: 
+  -5px -5px 10px rgba(255, 255, 255, 1),
+  5px 5px 10px rgba(173, 187, 211, .9),
+  inset 6px 3px 10px rgba(255, 255, 255, .75);
 }
+
+.music .player .buttons {
+  position: relative;
+  width: 100%;
+
+  display: flex; justify-content: space-evenly; align-items: center;
+}
+
+.buttons span {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex; justify-content: center; align-items: center;
+
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: radial-gradient(
+      var(--player-bg), 
+      var(--player-bg)
+    ) padding-box,
+    radial-gradient(
+      var(--player-highlight-1) 0%,
+      var(--player-highlight-1) 60%,
+      var(--player-bg) 70%
+    ) border-box;
+
+  box-shadow: 
+  -5px -5px 10px rgba(255, 255, 255, .95),
+  5px 5px 10px rgba(173, 187, 211, .65),
+  inset 7px 7px 8px rgba(255, 255, 255, 0.9),
+  inset -2px -2px 8px rgba(255, 255, 255, 0.9);
+    
+  color: var(--player-highlight-1);
+  cursor: pointer;  
+}
+
+.music .player .buttons span:active,
+.music .player .buttons span.active {
+  color: var(--player-bg);
+  border: 1px solid transparent;
+  background: linear-gradient(
+      var(--player-highlight-1), 
+      var(--player-highlight-1)
+    ) padding-box,
+    linear-gradient(
+      to bottom right, 
+      #758dfb, 
+      #90adfe
+    ) border-box;
+  box-shadow: 
+  inset 5px 5px 10px rgba(98, 135, 255, 1),
+  inset -1px -1px 5px rgba(98, 135, 255, 0.5),
+  7px 7px 10px rgba(255, 255, 255, .9),
+  -7px -7px 10px rgba(0, 0, 0, 0.1);
+}
+
+.music .player .buttons span ion-icon {
+  font-size: 1.25em;
+}
+
+.music .player .buttons span.playPause ion-icon {
+  font-size: 1.75em;
+}
+
 /* For the left-side 7.5px which was omitted by centre-to-centre approach for sliderFill */
 /* I tried keeping the left 7.5px directly but it always made the sliderFill to just touch the thumb's left extreme while sliding */
 /* <=================================================================================================================================================================> */
