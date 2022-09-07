@@ -28,14 +28,13 @@ sliderRef.addEventListener('input', function() {
   // The multiplier approach allows for width reduction as well, as well as tapped events along with drag events!
 });
 
-// on change song this is occuring after the play
 audioRef.addEventListener('loadedmetadata', () => {
   audioDuration = audioRef.duration;
-  console.log(audioDuration)
 });
-audioRef.addEventListener('play', () => {
+
+audioRef.addEventListener('playing', () => {
   sliderRef.max = audioDuration;
-  console.log(sliderRef.max)
+  console.log(`\x1b[32m${sliderRef.max}\x1b[0m`);
   let widthIncrement = (sliderWidth - thumbWidth) / sliderRef.max;
   
   intervalRef = setInterval(() => {
@@ -48,11 +47,17 @@ audioRef.addEventListener('play', () => {
     audioRef.onended = () => { clearInterval(intervalRef) }
     audioRef.onpause = () => { clearInterval(intervalRef) }
   }, 1000);
-})
+});
 
+// on a change song action, delete the previous interval and reset the width of the durSliderFill and value of the durSlider
 nextBtnRef.addEventListener('click', () => {
-  // on a change song action, delete the previous interval and reset the width of the durSliderFill and value of the durSlider
   clearInterval(intervalRef);
   sliderRef.value = 0; sliderFillRef.style.width = '0px';
   prevSliderFillWidth = 0;
 });
+
+prevBtnRef.addEventListener('click', () => {
+  clearInterval(intervalRef);
+  sliderRef.value = 0; sliderFillRef.style.width = '0px';
+  prevSliderFillWidth = 0;
+})

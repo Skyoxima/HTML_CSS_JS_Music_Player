@@ -1,5 +1,5 @@
 function playerMech() {
-  // fetching DOM elements
+  //+ fetching DOM elements
   const titleRef = document.querySelector('.title');
   const prevBtnRef = document.querySelector('.prev');
   const playPauseBtnRef = document.querySelector('.playPause');
@@ -9,7 +9,7 @@ function playerMech() {
   let songPlaying = false;
   let currSongIndex = 3;
   
-  //song list - idea for next versions -> use DB or API
+  //+ song list - idea for next versions -> use DB or API
   const songList = [
     {
       path: "Choices The Bad Cop.mp3",
@@ -29,32 +29,28 @@ function playerMech() {
     }
   ];
   
-  // Song Loading mechanism ~ selection of path and name
+  //+ Song Loading mechanism ~ selection of path and name
   function loadSong(songListElement) {
     titleRef.textContent = songListElement.songName;
     audioRef.src = songListElement.path;
+    // All loading (on change song as well) should happen and finish here itself
   }
   loadSong(songList[currSongIndex]);  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
   // also song is loaded outside rather than inside playSong is to preemptively show a title. Can be changed in further versions
   
-  // Buttons Functionality
+  //+ Buttons Functionality
   function playSong() {
     songPlaying = true;
-    //! to have the duration load first -- this is probably a makeshift solution
-    //? This is makeshift because it depends on the device strength of the user I think
-    // setTimeout(() => {
-    //   audioRef.play();
-    // }, 50)
-    audioRef.play();
     playPauseBtnRef.classList.add('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
+    audioRef.play();        //! audio.play() is an async function by default
   }
 
   function pauseSong() {
     songPlaying = false;
-    audioRef.pause();
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+    audioRef.pause();
   }
   
   playPauseBtnRef.addEventListener('click', () => {
@@ -67,7 +63,7 @@ function playerMech() {
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
   });
   
-  // Handling song end -> future idea, add repeat, shuffle buttons which will affect the behaviour after a song ends
+  //+ Handling song end -> future idea, add repeat, shuffle buttons which will affect the behaviour after a song ends
   audioRef.onended = () => {
     pauseSong();
   }
@@ -89,3 +85,13 @@ function playerMech() {
 
 
 playerMech();
+
+
+
+//* ------ From playSong function ------
+//! to have the duration load first -- this is probably a makeshift solution
+//? This is makeshift because it depends on the device strength of the user I think
+// setTimeout(() => {
+//   audioRef.play();
+// }, 50)
+// to remove this indefinity I think promise will be needed
