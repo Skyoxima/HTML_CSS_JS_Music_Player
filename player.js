@@ -24,6 +24,10 @@ function playerMech() {
       songName: "Mount Thunder - Pokemon Mystery Dungeon DX",
     },
     {
+      path: "Infinity.mp3",
+      songName: "Infinity",
+    },
+    {
       path: "Shadow Fight 2 Wasp Theme.wav",
       songName: "Ship Battle - Shadow Fight 2",
     }
@@ -41,6 +45,8 @@ function playerMech() {
   //+ Buttons Functionality
   function playSong() {
     songPlaying = true;
+    sliderRef.value = 0; sliderFillRef.style.width = '0px';
+    prevSliderFillWidth = 0;
     playPauseBtnRef.classList.add('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
     audioRef.play();        //! audio.play() is an async function by default
@@ -62,12 +68,14 @@ function playerMech() {
     // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
   });
-  
-  //+ Handling song end -> future idea, add repeat, shuffle buttons which will affect the behaviour after a song ends
-  audioRef.onended = () => {
-    pauseSong();
-  }
 
+  audioRef.addEventListener('ended', () => {
+    console.log('Ended');
+    songPlaying = false;
+    playPauseBtnRef.classList.remove('active');
+    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+  });
+  
   function prevSong() {
     currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
     loadSong(songList[currSongIndex]);
