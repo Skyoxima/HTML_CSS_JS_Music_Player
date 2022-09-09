@@ -70,7 +70,6 @@ function playerMech() {
   });
 
   audioRef.addEventListener('ended', () => {
-    console.log('Ended');
     songPlaying = false;
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
@@ -96,7 +95,7 @@ playerMech();
 
 
 
-//* ------ From playSong function ------
+//* ------ From playSong function (resolved) ------
 //! to have the duration load first -- this is probably a makeshift solution
 //? This is makeshift because it depends on the device strength of the user I think
 // setTimeout(() => {
