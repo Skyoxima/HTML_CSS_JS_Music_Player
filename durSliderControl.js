@@ -18,12 +18,8 @@ let audioDuration = 0;
 let autoIntervalRef = null;
 
 let iniRemMinutes = 0;
-let iniRemSeconds = 0;
-let iniElaMinutes = 0;
-let iniElaSeconds = 0;
-let elaMinutes = 0;
-let elaSeconds = 0;
-elapsedTimeRef.textContent = `${iniElaMinutes}:0${iniElaSeconds}`;
+let iniRemTotalSeconds = 0;
+elapsedTimeRef.textContent = '0:00';
 
 function manualControl() {
   let widthIncrement = (sliderWidth - thumbWidth) / sliderRef.max;
@@ -47,23 +43,34 @@ function autoControl() {
   
   //only let this happen when song had ended once
   if(hasEnded === true) {
-    remainingTimeRef.textContent = `${iniRemMinutes}:${iniRemSeconds}`;
+    remainingTimeRef.textContent = `${iniRemMinutes}:${iniRemTotalSeconds}`;
     hasEnded = false;
   }
 
   autoIntervalRef = setInterval(() => {
     sliderRef.value = audioRef.currentTime;
     console.log(sliderRef.value);
-    elaMinutes = Math.floor(parseFloat(sliderRef.value) / 60);
-    elaSeconds = Math.round(parseFloat(sliderRef.value) % 60);
-    elapsedTimeRef.textContent = `${elaMinutes}:${elaSeconds < 10 ? "0" : ""}${elaSeconds}`;
-    remainingTimeRef.textContent = `${iniRemMinutes - elaMinutes}:${elaSeconds > (iniRemSeconds - 10) ? "0" : ""}${iniRemSeconds - elaSeconds}`
-
+    
+    handleDurationTexts(); 
+  
     prevSliderValue = sliderRef.value;  // this is done to keep the manual control in check
     currSliderFillWidth = prevSliderFillWidth + widthIncrement;
     sliderFillRef.style.width = `${currSliderFillWidth}px`;
     prevSliderFillWidth = currSliderFillWidth;
   }, intervalSpan);
+}
+
+function handleDurationTexts() {
+  //* elapsedText
+  let elaMinutes = Math.floor(parseFloat(sliderRef.value) / 60);
+  let elaTotalSeconds = Math.floor(parseFloat(sliderRef.value));
+  let elaSeconds = Math.floor(parseFloat(sliderRef.value)) % 60;
+  elapsedTimeRef.textContent = `${elaMinutes}:${elaSeconds < 10 ? "0" : ""}${elaSeconds}`;
+  
+  //* RemainingText
+  let remMinutes = Math.floor((iniRemTotalSeconds - elaTotalSeconds) / 60);
+  let remSeconds = Math.floor((iniRemTotalSeconds - elaTotalSeconds) % 60);
+  remainingTimeRef.textContent = `${remMinutes}:${(iniRemTotalSeconds - elaTotalSeconds) % 60 < 10 ? "0":""}${remSeconds}`;
 }
 
 audioRef.addEventListener('ended', () => {
@@ -89,8 +96,8 @@ audioRef.addEventListener('loadedmetadata', () => {
   audioDuration = audioRef.duration;
   sliderRef.max = audioDuration;
   iniRemMinutes = Math.floor(audioDuration / 60);
-  iniRemSeconds = Math.round(audioDuration % 60);
-  remainingTimeRef.textContent = `${iniRemMinutes}:${iniRemSeconds}`;
+  iniRemTotalSeconds = Math.round(audioDuration);
+  remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
 });
 audioRef.addEventListener('playing', autoControl);
 
@@ -99,6 +106,7 @@ nextBtnRef.addEventListener('click', songChangeReset);
 
 
 //TODO:
-// Elapsed Time and Remaining Time (Formatting <10 secs)
+//Fix slight bug in remaining time  
+//Fix pause-sliderFill reset bug
 // Manual seek audio Time change (Full compatibility when the audio is already running too)
 // New button -> Play type (repeat, cycle, etc)

@@ -7,7 +7,7 @@ function playerMech() {
   const audioRef = document.querySelector('audio');
   
   let songPlaying = false;
-  let currSongIndex = 3;
+  let currSongIndex = 0;
   
   //+ song list - idea for next versions -> use DB or API
   const songList = [
