@@ -96,7 +96,7 @@ audioRef.addEventListener('loadedmetadata', () => {
   audioDuration = audioRef.duration;
   sliderRef.max = audioDuration;
   iniRemMinutes = Math.floor(audioDuration / 60);
-  iniRemTotalSeconds = Math.round(audioDuration);
+  iniRemTotalSeconds = audioDuration;
   remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
 });
 audioRef.addEventListener('playing', autoControl);
