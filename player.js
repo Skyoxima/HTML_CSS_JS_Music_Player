@@ -45,8 +45,6 @@ function playerMech() {
   //+ Buttons Functionality
   function playSong() {
     songPlaying = true;
-    sliderRef.value = 0; sliderFillRef.style.width = '0px';
-    prevSliderFillWidth = 0;
     playPauseBtnRef.classList.add('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
     audioRef.play();        //! audio.play() is an async function by default
@@ -57,6 +55,7 @@ function playerMech() {
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
     audioRef.pause();
+    // console.log(audioRef.currentTime)
   }
   
   playPauseBtnRef.addEventListener('click', () => {

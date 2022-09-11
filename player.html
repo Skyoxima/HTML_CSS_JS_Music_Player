@@ -25,10 +25,10 @@
         <span class="remainingTime"></span>
       </div>
       <div class="duration">
-        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" step=".1" max="100"/>
+        <input type="range" class="duration-slider" id="duration-range-slider" min="0" value="0" step=".1" max="100"/> <!-- .1 step signifies 100ms interval -->
+        <!-- Every 100ms the value will be increased by .1 -->
         <div class="durSliderFill"></div>
       </div>
-
       <div class="player">
         <audio src="" preload="auto"></audio>
         <div class="buttons">

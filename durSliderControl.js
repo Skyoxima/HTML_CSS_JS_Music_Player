@@ -8,57 +8,63 @@ const elapsedTimeRef = document.querySelector('.elapsedTime');
 const remainingTimeRef = document.querySelector('.remainingTime');
 
 let intervalSpan = 100;
-let hasEnded = false;
-let sliderWidth = parseFloat(window.getComputedStyle(sliderRef).getPropertyValue('width'));
-let thumbWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('--thumb-dimension'));
-let prevSliderValue = parseFloat(sliderRef.value);
-let prevSliderFillWidth = parseFloat(window.getComputedStyle(sliderFillRef).getPropertyValue('width'));
-let currSliderFillWidth = 0;
+let hasSongEnded = false;
 let audioDuration = 0;
 let autoIntervalRef = null;
+
+let sliderWidth = parseFloat(window.getComputedStyle(sliderRef).getPropertyValue('width'));
+let thumbWidth = parseInt(window.getComputedStyle(sliderRef).getPropertyValue('--thumb-dimension'));
+let widthIncrement = 0;
+let prevSliderValue = 0;
+let prevSliderFillWidth = 0;
+let currSliderFillWidth = 0;
 
 let iniRemMinutes = 0;
 let iniRemTotalSeconds = 0;
 elapsedTimeRef.textContent = '0:00';
 
-function manualControl() {
-  let widthIncrement = (sliderWidth - thumbWidth) / sliderRef.max;
+function metaLoadingSong() {
+  console.log('LMD');
+  audioDuration = audioRef.duration;
+  sliderRef.max = audioDuration;
+  widthIncrement = ((sliderWidth - thumbWidth) / sliderRef.max);  
+  console.log(widthIncrement);
+  iniRemMinutes = Math.floor(audioDuration / 60);
+  iniRemTotalSeconds = audioDuration;
+  remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
+}
+
+function manualSliderControl() {
   let currSliderValue = parseFloat(sliderRef.value);
-  console.log(currSliderValue);
+  
   if(currSliderValue !== prevSliderValue) {
     currSliderValue === 0 ? currSliderFillWidth = 0 
                           : currSliderValue === sliderRef.max ? currSliderFillWidth = sliderWidth - thumbWidth
                           : currSliderFillWidth = (prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue)));  
+    // lhs = rhs is an assignment expression and is a valid expression for ? in JS [NOT in C though]
     
-                          // lhs = rhs is an assignment expression and is a valid expression for ? in JS [NOT in C though]
     sliderFillRef.style.width = `${currSliderFillWidth}px`
+    audioRef.currentTime = sliderRef.value;
+    clearInterval(autoIntervalRef);
+    handleDurationTexts();
     prevSliderValue = currSliderValue;
     prevSliderFillWidth = currSliderFillWidth;
   }
   // The multiplier approach allows for width reduction as well, as well as tapped events along with drag events!
 }
 
-function autoControl() {
-  let widthIncrement = ((sliderWidth - thumbWidth) / sliderRef.max) * (intervalSpan / 1000);
-  
-  //only let this happen when song had ended once
-  if(hasEnded === true) {
-    remainingTimeRef.textContent = `${iniRemMinutes}:${iniRemTotalSeconds}`;
-    hasEnded = false;
-  }
-
+function autoSliderControl() {
   autoIntervalRef = setInterval(() => {
     sliderRef.value = audioRef.currentTime;
-    console.log(sliderRef.value);
-    
     handleDurationTexts(); 
-  
-    prevSliderValue = sliderRef.value;  // this is done to keep the manual control in check
-    currSliderFillWidth = prevSliderFillWidth + widthIncrement;
+    prevSliderValue = sliderRef.value;               // this is done to keep the manual control in check
+    currSliderFillWidth = prevSliderFillWidth + ((widthIncrement) * (intervalSpan/1000));
     sliderFillRef.style.width = `${currSliderFillWidth}px`;
     prevSliderFillWidth = currSliderFillWidth;
   }, intervalSpan);
 }
+
+// Since the interval is 1/10th of a second, widthIncrement has to be lowered in proportion to it
 
 function handleDurationTexts() {
   //* elapsedText
@@ -73,40 +79,38 @@ function handleDurationTexts() {
   remainingTimeRef.textContent = `${remMinutes}:${(iniRemTotalSeconds - elaTotalSeconds) % 60 < 10 ? "0":""}${remSeconds}`;
 }
 
-audioRef.addEventListener('ended', () => {
-  hasEnded = true;
-  console.log('Ended Fired')
+function sliderResetOnSameSongRepeat() {
+  if(hasSongEnded === true) {
+    sliderRef.value = 0;
+    sliderFillRef.style.width = '0px';
+  }
+}
+
+function sliderMaxedOnEnd() {
   clearInterval(autoIntervalRef);
   sliderRef.value = audioDuration;
-  sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`
-});
+  sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
+}
 
-audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
-
-// on a change song action, delete the previous interval and reset the width of the durSliderFill and value of the durSlider
 function songChangeReset() {
   clearInterval(autoIntervalRef);
   sliderRef.value = 0; sliderFillRef.style.width = '0px';
   prevSliderFillWidth = 0;
 }
 
-sliderRef.addEventListener('input', manualControl);
-audioRef.addEventListener('loadedmetadata', () => {
-  console.log('LMD');
-  audioDuration = audioRef.duration;
-  sliderRef.max = audioDuration;
-  iniRemMinutes = Math.floor(audioDuration / 60);
-  iniRemTotalSeconds = audioDuration;
-  remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
-});
-audioRef.addEventListener('playing', autoControl);
 
+
+sliderRef.addEventListener('input', manualSliderControl);
+audioRef.addEventListener('loadedmetadata', metaLoadingSong);
+audioRef.addEventListener('playing', autoSliderControl);
+audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
+audioRef.addEventListener('ended', sliderMaxedOnEnd);
 prevBtnRef.addEventListener('click', songChangeReset);
 nextBtnRef.addEventListener('click', songChangeReset);
 
 
 //TODO:
-//Fix slight bug in remaining time  
-//Fix pause-sliderFill reset bug
-// Manual seek audio Time change (Full compatibility when the audio is already running too)
+//- Fix slight bug in remaining time  
+//- Manual seek audio Time change (Full compatibility when the audio is already running too)
+// Fix pause-sliderFill reset bug and seek-sliderFill reset bug
 // New button -> Play type (repeat, cycle, etc)
