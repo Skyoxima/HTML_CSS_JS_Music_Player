@@ -1,3 +1,7 @@
+
+//+ importing function(s) from other sources
+import { resetSliderValues } from "./durSliderControl.mjs";
+
 function playerMech() {
   //+ fetching DOM elements
   const titleRef = document.querySelector('.title');
@@ -6,12 +10,13 @@ function playerMech() {
   const nextBtnRef = document.querySelector('.next');
   const audioRef = document.querySelector('audio');
   const modeBtnRef = document.querySelector('.mode');
-
+  
+  //+ Local variables
   let songPlaying = false;
   let currSongIndex = 3;
   // let playTypes = ['stop', 'loop-same', 'loop-all'];
-  let currentPlayType = 'stop';
-
+  let currentPlayType = 'loop-all';
+  
   //+ song list - idea for next versions -> use DB or API
   const songList = [
     {
@@ -86,7 +91,11 @@ function playerMech() {
     
     if(currentPlayType !== 'stop') {
       if(currentPlayType === 'loop-same') {
+        resetSliderValues();
         playSong();
+      } else if(currentPlayType === 'loop-all') {
+        resetSliderValues();
+        nextSong();
       }
     }
   });
@@ -102,6 +111,7 @@ playerMech();
 // Replay Modes
 // Dark Mode
 // Glow Ring (From a previous project)
+// Song Title Marquee
 
 //* ------ From playSong function (resolved) ------
 //! to have the duration load first -- this is probably a makeshift solution

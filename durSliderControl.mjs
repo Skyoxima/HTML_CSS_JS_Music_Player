@@ -83,17 +83,10 @@ function handleDurationTexts() {
   remainingTimeRef.textContent = `${remMinutes}:${(iniRemTotalSeconds - elaTotalSeconds) % 60 < 10 ? "0":""}${remSeconds}`;
 }
 
-function resetSliderValues() {
+export function resetSliderValues() {
   sliderRef.value = 0; sliderFillRef.style.width = '0px';
   prevSliderFillWidth = 0;
 }
-
-// function sliderResetManual() {
-//   // This is written to reset the slider on MANUAL replay of the same song
-//   if(hasSongEnded === true) {
-//     resetSliderValues()
-//   }
-// }
 
 function sliderMaxedOnEnd() {
   // This function ensures no minor visual error on the slider when the song has Ended
