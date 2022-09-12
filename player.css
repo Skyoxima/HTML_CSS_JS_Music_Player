@@ -61,31 +61,24 @@ body {
   display: flex; justify-content: center; align-items: center;
 
   /*! New way to apply GRADIENT BORDERS! */
-  background: radial-gradient(
-      var(--player-highlight-1),
+  background: linear-gradient(
+      var(--player-highlight-1), 
       var(--player-highlight-1)
     ) padding-box,
-    radial-gradient(
-      var(--big-button-border-∇-d) 0%,
-      var(--big-button-border-∇-d) 70%,
-      var(--big-button-border-∇-l) 71%
+    linear-gradient(
+      to top left,  
+      rgb(181, 190, 203),
+      rgba(245, 245, 245) 70%
     ) border-box;
-  border: 3px solid transparent;
+  border: 4px solid transparent;
   border-radius: 50%;
 
   /*+ Concave */
-  box-shadow: 
-  -15px -15px 30px rgba(255, 255, 255, 0.9),
-  15px 15px 30px var(--button-shadow),
-  inset -2px -2px 12px var(--button-shadow-∇-d),
-  inset 7px 7px 20px var(--button-shadow-∇-l);
-
-  /*+ Convex */
-  /* box-shadow: 
-  -10px -10px 15px rgba(255, 255, 255, 1),
-  10px 10px 15px rgba(0, 0, 0, 0.175), 
-  inset 5px 5px 20px rgba(0, 0, 0, 0.15),
-  inset -5px -5px 20px rgba(255, 255, 255, .6); */
+  box-shadow:
+  inset -5px -5px 10px var(--button-shadow-∇-d),
+  inset 5px 5px 10px var(--button-shadow-∇-l),
+  10px 10px 15px rgba(130, 154, 183, 0.55),
+  -10px -10px 15px rgba(255, 255, 255);
 }
 
 .music .main-icon ion-icon {
@@ -149,6 +142,7 @@ body {
   margin-bottom: 10px;
 }
 
+/*~ Volume Slider ICON  */
 .music .volume .sliderIcon {
   position: relative;
   left: -10px;
@@ -163,8 +157,8 @@ body {
   box-shadow: 
   -3px -3px 5px rgba(255, 255, 255, 1),
   3px 3px 5px hsla(226, 48%, 18%, 0.25),
-  inset 1px 1px 4px var(--button-shadow-∇-d),
-  inset -1px -1px 4px rgba(255, 255, 255, .5);
+  inset -1px -1px 4px var(--button-shadow-∇-d),
+  inset 1px 1px 4px rgba(255, 255, 255, .5);
   
   transform: rotate(90deg);
   cursor: pointer;
@@ -285,16 +279,7 @@ body {
   width: 400px;
   padding: 10px 20px;
 
-  background: linear-gradient(
-      var(--player-bg), 
-      var(--player-bg)
-    ) padding-box,
-    linear-gradient(
-      to top left, 
-      var(--big-button-border-∇-d), 
-      var(--player-bg)
-      ) border-box;
-  border: 1px solid transparent;
+  border: 1px solid var(--player-bg);
   border-radius: 80px;
   box-shadow: 
   -5px -5px 10px rgba(255, 255, 255, 1),
