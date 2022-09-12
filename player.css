@@ -350,6 +350,13 @@ body {
   font-size: 1.75em;
 }
 
+.music .player .buttons span.mode {
+  color: grey;
+}
+.music .player .buttons span.mode:active {
+  color: var(--player-bg);
+}
+
 /* For the left-side 7.5px which was omitted by centre-to-centre approach for sliderFill */
 /* I tried keeping the left 7.5px directly but it always made the sliderFill to just touch the thumb's left extreme while sliding */
 /* <=================================================================================================================================================================> */

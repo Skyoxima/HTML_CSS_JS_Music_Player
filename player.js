@@ -5,10 +5,13 @@ function playerMech() {
   const playPauseBtnRef = document.querySelector('.playPause');
   const nextBtnRef = document.querySelector('.next');
   const audioRef = document.querySelector('audio');
-  
+  const modeBtnRef = document.querySelector('.mode');
+
   let songPlaying = false;
-  let currSongIndex = 0;
-  
+  let currSongIndex = 3;
+  // let playTypes = ['stop', 'loop-same', 'loop-all'];
+  let currentPlayType = 'stop';
+
   //+ song list - idea for next versions -> use DB or API
   const songList = [
     {
@@ -37,10 +40,9 @@ function playerMech() {
   function loadSong(songListElement) {
     titleRef.textContent = songListElement.songName;
     audioRef.src = songListElement.path;
-    // All loading (on change song as well) should happen and finish here itself
   }
-  loadSong(songList[currSongIndex]);  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
-  // also song is loaded outside rather than inside playSong is to preemptively show a title. Can be changed in further versions
+  loadSong(songList[currSongIndex]);  
+  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
   
   //+ Buttons Functionality
   function playSong() {
@@ -57,13 +59,22 @@ function playerMech() {
     audioRef.pause();
     // console.log(audioRef.currentTime)
   }
-  
+
+  function prevSong() {
+    currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
+    loadSong(songList[currSongIndex]);
+    playSong();
+  }
+
+  function nextSong() {
+    currSongIndex < songList.length - 1 ? currSongIndex++ : currSongIndex = 0;
+    loadSong(songList[currSongIndex]);
+    playSong();
+  }
+
+  //+ Event Listeners
   playPauseBtnRef.addEventListener('click', () => {
-    if(songPlaying) {
-      pauseSong();
-    } else {
-      playSong();
-    }
+    songPlaying ? pauseSong() : playSong();   
     // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
   });
@@ -72,27 +83,25 @@ function playerMech() {
     songPlaying = false;
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+    
+    if(currentPlayType !== 'stop') {
+      if(currentPlayType === 'loop-same') {
+        playSong();
+      }
+    }
   });
   
-  function prevSong() {
-    currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
-    loadSong(songList[currSongIndex]);
-    playSong();
-  }
   prevBtnRef.addEventListener('click', prevSong);
-  
-  function nextSong() {
-    currSongIndex < songList.length - 1 ? currSongIndex++ : currSongIndex = 0;
-    loadSong(songList[currSongIndex]);
-    playSong();
-  }
   nextBtnRef.addEventListener('click', nextSong);
 }
 
 
 playerMech();
 
-
+// TODO
+// Replay Modes
+// Dark Mode
+// Glow Ring (From a previous project)
 
 //* ------ From playSong function (resolved) ------
 //! to have the duration load first -- this is probably a makeshift solution

@@ -54,6 +54,11 @@ function manualSliderControl() {
 }
 
 function autoSliderControl() {
+  if(hasSongEnded === true) {
+    resetSliderValues();
+    hasSongEnded = false;
+  }
+
   autoIntervalRef = setInterval(() => {
     sliderRef.value = audioRef.currentTime;
     handleDurationTexts(); 
@@ -63,7 +68,6 @@ function autoSliderControl() {
     prevSliderFillWidth = currSliderFillWidth;
   }, intervalSpan);
 }
-
 // Since the interval is 1/10th of a second, widthIncrement has to be lowered in proportion to it
 
 function handleDurationTexts() {
@@ -79,26 +83,31 @@ function handleDurationTexts() {
   remainingTimeRef.textContent = `${remMinutes}:${(iniRemTotalSeconds - elaTotalSeconds) % 60 < 10 ? "0":""}${remSeconds}`;
 }
 
-function sliderResetOnSameSongRepeat() {
-  if(hasSongEnded === true) {
-    sliderRef.value = 0;
-    sliderFillRef.style.width = '0px';
-  }
-}
-
-function sliderMaxedOnEnd() {
-  clearInterval(autoIntervalRef);
-  sliderRef.value = audioDuration;
-  sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
-}
-
-function songChangeReset() {
-  clearInterval(autoIntervalRef);
+function resetSliderValues() {
   sliderRef.value = 0; sliderFillRef.style.width = '0px';
   prevSliderFillWidth = 0;
 }
 
+// function sliderResetManual() {
+//   // This is written to reset the slider on MANUAL replay of the same song
+//   if(hasSongEnded === true) {
+//     resetSliderValues()
+//   }
+// }
 
+function sliderMaxedOnEnd() {
+  // This function ensures no minor visual error on the slider when the song has Ended
+  clearInterval(autoIntervalRef);
+  sliderRef.value = audioDuration;
+  sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
+
+  hasSongEnded = true;
+}
+
+function songChangeReset() {
+  clearInterval(autoIntervalRef);
+  resetSliderValues();
+}
 
 sliderRef.addEventListener('input', manualSliderControl);
 audioRef.addEventListener('loadedmetadata', metaLoadingSong);
@@ -112,5 +121,4 @@ nextBtnRef.addEventListener('click', songChangeReset);
 //TODO:
 //- Fix slight bug in remaining time  
 //- Manual seek audio Time change (Full compatibility when the audio is already running too)
-// Fix pause-sliderFill reset bug and seek-sliderFill reset bug
-// New button -> Play type (repeat, cycle, etc)
+//- Fix pause-sliderFill reset bug and seek-sliderFill reset bug
