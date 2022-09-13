@@ -40,18 +40,20 @@ function manualSliderControl() {
                           : currSliderValue === sliderRef.max ? currSliderFillWidth = sliderWidth - thumbWidth
                           : currSliderFillWidth = (prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue)));  
     // lhs = rhs is an assignment expression and is a valid expression for ? in JS [NOT in C though]
-    
     sliderFillRef.style.width = `${currSliderFillWidth}px`
+    
+    //! HANDLE AFTER SONG END SLIDER MORE, quite some glitches 
     audioRef.currentTime = sliderRef.value;
     clearInterval(autoIntervalRef);
     handleDurationTexts();
+    
     prevSliderValue = currSliderValue;
     prevSliderFillWidth = currSliderFillWidth;
   }
   // The multiplier approach allows for width reduction as well, as well as tapped events along with drag events!
 }
 
-function autoSliderControl() {
+function autoSliderControl() {  
   if(hasSongEnded === true) {
     resetSliderValues();
     hasSongEnded = false;
@@ -86,8 +88,9 @@ export function resetSliderValues() {
   prevSliderFillWidth = 0;
 }
 
-function sliderMaxedOnEnd() {
+function sliderOnSongEnd() {
   // This function ensures no minor visual error on the slider when the song has Ended
+  console.log('sliderOnSongEnd Fired');
   clearInterval(autoIntervalRef);
   sliderRef.value = audioDuration;
   sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
@@ -105,7 +108,7 @@ if(audioRef.readyState > 0) {metaLoadingSong(); }
 else {  audioRef.addEventListener('loadedmetadata', metaLoadingSong); }
 audioRef.addEventListener('playing', autoSliderControl);
 audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
-audioRef.addEventListener('ended', sliderMaxedOnEnd);
+audioRef.addEventListener('ended', sliderOnSongEnd);
 prevBtnRef.addEventListener('click', songChangeReset);
 nextBtnRef.addEventListener('click', songChangeReset);
 

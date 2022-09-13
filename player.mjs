@@ -1,9 +1,8 @@
-
-//+ importing function(s) from other sources
+// importing function(s) from other sources
 import { resetSliderValues } from "./durSliderControl.mjs";
 
 function playerMech() {
-  //+ fetching DOM elements
+  // fetching DOM elements
   const titleRef = document.querySelector('.title');
   const prevBtnRef = document.querySelector('.prev');
   const playPauseBtnRef = document.querySelector('.playPause');
@@ -11,13 +10,13 @@ function playerMech() {
   const audioRef = document.querySelector('audio');
   const modeBtnRef = document.querySelector('.mode');
   
-  //+ Local variables
+  // Local variables
   let songPlaying = false;
   let currSongIndex = 3;
-  let playTypes = ['stop', 'loop-same', 'loop-all'];
-  let currentPlayIndex = 0;
+  let playModes = ['stop', 'loop-same', 'loop-all'];
+  let currentModeIndex = 0;
   
-  //+ song list - idea for next versions -> use DB or API
+  // song list - idea for next versions -> use DB or API
   const songList = [
     {
       path: "Choices The Bad Cop.mp3",
@@ -41,7 +40,7 @@ function playerMech() {
     }
   ];
   
-  //+ Song Loading mechanism ~ selection of path and name
+  // Song Loading mechanism ~ selection of path and name
   function loadSong(songListElement) {
     titleRef.textContent = songListElement.songName;
     audioRef.src = songListElement.path;
@@ -49,7 +48,7 @@ function playerMech() {
   loadSong(songList[currSongIndex]);  
   //First loading -> future idea, ask for directory/db? to choose from where to load the songs
   
-  //+ Buttons Functionality
+  // Buttons Functionality
   function playSong() {
     songPlaying = true;
     playPauseBtnRef.classList.add('active');
@@ -77,50 +76,53 @@ function playerMech() {
     playSong();
   }
 
-  //+ Event Listeners
+  function playModeChange() {
+    currentModeIndex < playModes.length - 1 ? currentModeIndex++ : currentModeIndex = 0;
+    if(playModes[currentModeIndex] === 'stop') {
+      modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
+      modeBtnRef.classList.remove('innerActive');
+    }
+    else if(playModes[currentModeIndex] === 'loop-same') {
+      modeBtnRef.classList.add('innerActive');
+    } else if(playModes[currentModeIndex] === 'loop-all') {
+      modeBtnRef.innerHTML = '<ion-icon name="infinite-outline"></ion-icon>'; 
+    }
+  }
+
+  function onSongEnd() {
+    playPauseBtnRef.classList.remove('active');
+    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+    
+    if(playModes[currentModeIndex] !== 'stop') {
+      if(playModes[currentModeIndex] === 'loop-same') {
+        resetSliderValues();
+        playSong();
+      } else if(playModes[currentModeIndex] === 'loop-all') {
+        resetSliderValues();
+        nextSong();
+      }
+    }
+  }
+  
+  // Event Listeners
   playPauseBtnRef.addEventListener('click', () => {
     songPlaying ? pauseSong() : playSong();   
     // since we had to perform the condition checking of if the song is playing, callback function was written which'll after checking status call the appropriate function
     // if there were no additional lines of code then the functions would've been directly passed as callbacks (no '()') (can be seen below with prevSong and nextSong)
   });
 
-  audioRef.addEventListener('ended', () => {
-    songPlaying = false;
-    playPauseBtnRef.classList.remove('active');
-    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
-    
-    if(playTypes[currentPlayIndex] !== 'stop') {
-      if(playTypes[currentPlayIndex] === 'loop-same') {
-        resetSliderValues();
-        playSong();
-      } else if(playTypes[currentPlayIndex] === 'loop-all') {
-        resetSliderValues();
-        nextSong();
-      }
-    }
-  });
-  
+  audioRef.addEventListener('ended', onSongEnd);
   prevBtnRef.addEventListener('click', prevSong);
   nextBtnRef.addEventListener('click', nextSong);
-  modeBtnRef.addEventListener('click', () => {
-    currentPlayIndex < playTypes.length - 1 ? currentPlayIndex++ : currentPlayIndex = 0;
-    if(playTypes[currentPlayIndex] === 'stop') {
-      modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
-      modeBtnRef.classList.remove('innerActive');
-    }
-    else if(playTypes[currentPlayIndex] === 'loop-same') {
-      modeBtnRef.classList.add('innerActive');
-    } else if(playTypes[currentPlayIndex] === 'loop-all') {
-      modeBtnRef.innerHTML = '<ion-icon name="infinite-outline"></ion-icon>'; 
-    }
-  });
+  modeBtnRef.addEventListener('click', playModeChange);
 }
 
 
 playerMech();
 
 // TODO
-// Replay Modes
+//- Replay Modes
+// Learn Event Loop properly to understand why ended of this file fires later than durSlider's (which is what I want too but am curious)
 // Dark Mode
 // Glow Ring (From a previous project)
 // Song Title Marquee
@@ -131,4 +133,4 @@ playerMech();
 // setTimeout(() => {
 //   audioRef.play();
 // }, 50)
-// to remove this indefinity I think promise will be needed
+// to remove this indefinity I think promise will be needed ---> Nope
