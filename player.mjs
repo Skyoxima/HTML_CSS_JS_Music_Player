@@ -14,8 +14,8 @@ function playerMech() {
   //+ Local variables
   let songPlaying = false;
   let currSongIndex = 3;
-  // let playTypes = ['stop', 'loop-same', 'loop-all'];
-  let currentPlayType = 'loop-all';
+  let playTypes = ['stop', 'loop-same', 'loop-all'];
+  let currentPlayIndex = 0;
   
   //+ song list - idea for next versions -> use DB or API
   const songList = [
@@ -89,11 +89,11 @@ function playerMech() {
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
     
-    if(currentPlayType !== 'stop') {
-      if(currentPlayType === 'loop-same') {
+    if(playTypes[currentPlayIndex] !== 'stop') {
+      if(playTypes[currentPlayIndex] === 'loop-same') {
         resetSliderValues();
         playSong();
-      } else if(currentPlayType === 'loop-all') {
+      } else if(playTypes[currentPlayIndex] === 'loop-all') {
         resetSliderValues();
         nextSong();
       }
@@ -102,6 +102,19 @@ function playerMech() {
   
   prevBtnRef.addEventListener('click', prevSong);
   nextBtnRef.addEventListener('click', nextSong);
+  modeBtnRef.addEventListener('click', () => {
+    currentPlayIndex < playTypes.length - 1 ? currentPlayIndex++ : currentPlayIndex = 0;
+    console.log(currentPlayIndex, modeBtnRef)
+    if(playTypes[currentPlayIndex] === 'stop') {
+      modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
+      modeBtnRef.classList.remove('innerActive');
+    }
+    else if(playTypes[currentPlayIndex] === 'loop-same') {
+      modeBtnRef.classList.add('innerActive');
+    } else if(playTypes[currentPlayIndex] === 'loop-all') {
+      modeBtnRef.innerHTML = '<ion-icon name="infinite-outline"></ion-icon>'; 
+    }
+  });
 }
 
 

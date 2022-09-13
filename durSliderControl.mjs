@@ -3,7 +3,6 @@ const sliderFillRef = document.querySelector('.durSliderFill');
 const audioRef = document.querySelector('audio');
 const prevBtnRef = document.querySelector('.prev');
 const nextBtnRef = document.querySelector('.next');
-const playPauseBtnRef = document.querySelector('.playPause');
 const elapsedTimeRef = document.querySelector('.elapsedTime');
 const remainingTimeRef = document.querySelector('.remainingTime');
 
