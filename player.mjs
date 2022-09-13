@@ -104,7 +104,6 @@ function playerMech() {
   nextBtnRef.addEventListener('click', nextSong);
   modeBtnRef.addEventListener('click', () => {
     currentPlayIndex < playTypes.length - 1 ? currentPlayIndex++ : currentPlayIndex = 0;
-    console.log(currentPlayIndex, modeBtnRef)
     if(playTypes[currentPlayIndex] === 'stop') {
       modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
       modeBtnRef.classList.remove('innerActive');

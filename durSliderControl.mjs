@@ -23,11 +23,10 @@ let iniRemTotalSeconds = 0;
 elapsedTimeRef.textContent = '0:00';
 
 function metaLoadingSong() {
-  console.log('LMD');
   audioDuration = audioRef.duration;
   sliderRef.max = audioDuration;
   widthIncrement = ((sliderWidth - thumbWidth) / sliderRef.max);  
-  console.log(widthIncrement);
+  
   iniRemMinutes = Math.floor(audioDuration / 60);
   iniRemTotalSeconds = audioDuration;
   remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
@@ -102,7 +101,8 @@ function songChangeReset() {
 }
 
 sliderRef.addEventListener('input', manualSliderControl);
-audioRef.addEventListener('loadedmetadata', metaLoadingSong);
+if(audioRef.readyState > 0) {metaLoadingSong(); } 
+else {  audioRef.addEventListener('loadedmetadata', metaLoadingSong); }
 audioRef.addEventListener('playing', autoSliderControl);
 audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
 audioRef.addEventListener('ended', sliderMaxedOnEnd);
