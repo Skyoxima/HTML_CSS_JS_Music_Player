@@ -90,6 +90,7 @@ function playerMech() {
   }
 
   function onSongEnd() {
+    songPlaying = false;
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
     
