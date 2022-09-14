@@ -1,5 +1,5 @@
 // importing function(s) from other sources
-import { resetSliderValues, sliderOnSongEnd } from "./durSliderControl.mjs";
+import { sliderOnSongEnd } from "./durSliderControl.mjs";
 
 function playerMech() {
   // fetching DOM elements
@@ -117,15 +117,14 @@ function playerMech() {
   modeBtnRef.addEventListener('click', playModeChange);
 }
 
-
 playerMech();
 
 // TODO
 //- Replay Modes
-// Learn Event Loop properly to understand why ended of this file fires later than durSlider's (which is what I want too but am curious)
 // Dark Mode
 // Glow Ring (From a previous project)
 // Song Title Marquee
+// Understand Event Loop properly (had curiousity about same eventListeners order of execution)
 
 //* ------ From playSong function (resolved) ------
 //! to have the duration load first -- this is probably a makeshift solution

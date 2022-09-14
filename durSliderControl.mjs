@@ -29,7 +29,7 @@ function metaLoadingSong() {
   
   iniRemMinutes = Math.floor(audioDuration / 60);
   iniRemTotalSeconds = audioDuration;
-  remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.round(iniRemTotalSeconds % 60)}`;
+  remainingTimeRef.textContent = `${iniRemMinutes}:${Math.round(iniRemTotalSeconds % 60) < 10 ? "0": ""}${Math.floor(iniRemTotalSeconds % 60)}`;
 }
 
 function manualSliderControl() {
@@ -82,7 +82,7 @@ function handleDurationTexts() {
   remainingTimeRef.textContent = `${remMinutes}:${(iniRemTotalSeconds - elaTotalSeconds) % 60 < 10 ? "0":""}${remSeconds}`;
 }
 
-export function resetSliderValues() {
+function resetSliderValues() {
   sliderRef.value = 0; sliderFillRef.style.width = '0px';
   prevSliderFillWidth = 0;
 }
