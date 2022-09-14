@@ -8,6 +8,7 @@ const remainingTimeRef = document.querySelector('.remainingTime');
 
 let intervalSpan = 100;
 let hasSongEnded = false;
+let playedOnce = false;
 let audioDuration = 0;
 let autoIntervalRef = null;
 
@@ -22,7 +23,7 @@ let iniRemMinutes = 0;
 let iniRemTotalSeconds = 0;
 elapsedTimeRef.textContent = '0:00';
 
-function metaLoadingSong() {
+function loadSongDataAndInit() {
   audioDuration = audioRef.duration;
   sliderRef.max = audioDuration;
   widthIncrement = ((sliderWidth - thumbWidth) / sliderRef.max);  
@@ -33,19 +34,22 @@ function metaLoadingSong() {
 }
 
 function manualSliderControl() {
-  let currSliderValue = parseFloat(sliderRef.value);
+  if(hasSongEnded === true) { hasSongEnded = false; } 
+  // to not have reduced slider values on an input after a song has ended
   
+  let currSliderValue = parseFloat(sliderRef.value);
   if(currSliderValue !== prevSliderValue) {
-    currSliderValue === 0 ? currSliderFillWidth = 0 
-                          : currSliderValue === sliderRef.max ? currSliderFillWidth = sliderWidth - thumbWidth
-                          : currSliderFillWidth = (prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue)));  
-    // lhs = rhs is an assignment expression and is a valid expression for ? in JS [NOT in C though]
-    sliderFillRef.style.width = `${currSliderFillWidth}px`
-    
-    audioRef.pause();
     audioRef.currentTime = sliderRef.value;
     handleDurationTexts();
     
+    if(currSliderValue === 0) {
+      currSliderFillWidth = 0;
+    } else if(currSliderValue === sliderRef.max) {
+      currSliderFillWidth = sliderWidth - thumbWidth;
+    } else {
+      currSliderFillWidth = prevSliderFillWidth + (widthIncrement * (currSliderValue - prevSliderValue));
+    }      
+    sliderFillRef.style.width = `${currSliderFillWidth}px`
     prevSliderValue = currSliderValue;
     prevSliderFillWidth = currSliderFillWidth;
   }
@@ -58,10 +62,12 @@ function autoSliderControl() {
     hasSongEnded = false;
   }
 
+  playedOnce = true;
   autoIntervalRef = setInterval(() => {
-    sliderRef.value = audioRef.currentTime;
+    sliderRef.value = parseFloat(sliderRef.value) + (intervalSpan / 1000);  //~ Not letting the autoSliding process be depended on audio Playback (risky when audio buffers while downloading (which it won't here cause local storage but still))
     handleDurationTexts(); 
-    prevSliderValue = sliderRef.value;               // this is done to keep the manual control in check
+    prevSliderValue = sliderRef.value;                                      // this is done to keep the manual control in check so while the song is playing it still works
+    
     currSliderFillWidth = prevSliderFillWidth + ((widthIncrement) * (intervalSpan/1000));
     sliderFillRef.style.width = `${currSliderFillWidth}px`;
     prevSliderFillWidth = currSliderFillWidth;
@@ -88,28 +94,35 @@ function resetSliderValues() {
 }
 
 export function sliderOnSongEnd() {
-  clearInterval(autoIntervalRef);
+  if(audioRef.paused !== true) { clearInterval(autoIntervalRef); }
   hasSongEnded = true;
+  playedOnce = false;
 }
 
 function songChangeReset() {
+  // a change in the src of the audio doesn't trigger an pause or ended event that's why interval has to be terminated
   clearInterval(autoIntervalRef);
   resetSliderValues();
 }
 
 sliderRef.addEventListener('input', manualSliderControl);
-sliderRef.addEventListener('mouseup', () => {
-  audioRef.play();
+sliderRef.addEventListener('mousedown', () => {
+  audioRef.pause();
 })
-if(audioRef.readyState > 0) { metaLoadingSong(); } 
-else { audioRef.addEventListener('loadedmetadata', metaLoadingSong); }
+sliderRef.addEventListener('mouseup', () => {
+  if(playedOnce === true) {
+    audioRef.play();
+  }
+})
+if(audioRef.readyState > 0) { loadSongDataAndInit(); } 
+else { audioRef.addEventListener('loadedmetadata', loadSongDataAndInit); }
 audioRef.addEventListener('playing', autoSliderControl);
-audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
+audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef); });    // pause is triggered right before ended as well
 prevBtnRef.addEventListener('click', songChangeReset);
 nextBtnRef.addEventListener('click', songChangeReset);
 
 
 //TODO:
-//- Fix slight bug in remaining time  
+//- Fix slight bug in remaining time
 //- Manual seek audio Time change (Full compatibility when the audio is already running too)
 //- Fix pause-sliderFill reset bug and seek-sliderFill reset bug

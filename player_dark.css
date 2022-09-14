@@ -11,8 +11,6 @@
   
   --big-button-border-∇-l: #202328;
   --big-button-border-∇-d: #121315;
-  
-
 
   /* Dimensions */
   --slider-width: 300px;
@@ -72,7 +70,7 @@ body {
   inset 2px 2px 4px hsla(18, 87%, 25%, 0.9),
   inset 5px 5px 10px hsla(18, 93%, 66%, 0.9),
   inset -5px -5px 10px hsla(18, 87%, 25%, 0.9),
-  10px 10px 15px rgba(0, 0, 0, 0.8),
+  10px 10px 15px rgba(0, 0, 0, 0.6),
   -10px -10px 15px rgba(200, 200, 200, 0.2);
 }
 
@@ -126,7 +124,7 @@ body {
   left: 10%;
   width: var(--after-width); height: 120%;
   
-  background: linear-gradient(to right, var(--player-bg-∇-d) -57.5%, var(--player-bg-∇-l));
+  background: linear-gradient(to right, var(--player-bg-∇-d) -58.5%, var(--player-bg-∇-l) 105%);
   border-radius: 15px;
   transition: width 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
@@ -207,7 +205,7 @@ body {
     var(--player-highlight-1) 30%, 
     var(--body-bg) 35%
     );
-  border: 1px solid var(--body-bg);
+  border: 1px solid var(--player-highlight-1);
   border-radius: 50%;
 }
 .music .duration .duration-slider::-webkit-slider-thumb {
