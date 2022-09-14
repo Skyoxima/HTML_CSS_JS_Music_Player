@@ -1,109 +1,108 @@
 // importing function(s) from other sources
 import { sliderOnSongEnd } from "./durSliderControl.mjs";
+// fetching DOM elements
+const titleRef = document.querySelector('.title');
+const prevBtnRef = document.querySelector('.prev');
+const playPauseBtnRef = document.querySelector('.playPause');
+const nextBtnRef = document.querySelector('.next');
+const audioRef = document.querySelector('audio');
+const modeBtnRef = document.querySelector('.mode');
 
-function playerMech() {
-  // fetching DOM elements
-  const titleRef = document.querySelector('.title');
-  const prevBtnRef = document.querySelector('.prev');
-  const playPauseBtnRef = document.querySelector('.playPause');
-  const nextBtnRef = document.querySelector('.next');
-  const audioRef = document.querySelector('audio');
-  const modeBtnRef = document.querySelector('.mode');
+let songPlaying = false;
+let currSongIndex = 3;
+let playModes = ['stop', 'loop-same', 'loop-all'];
+let currentModeIndex = 0;
+
+// song list - idea for next versions -> use DB or API
+const songList = [
+  {
+    path: "Choices The Bad Cop.mp3",
+    songName: "The Bad Cop - Choices",
+  },
+  {
+    path: "PLA Volo Theme.mp3",
+    songName: "Vs. Pokemon Wielder Volo",
+  },
+  {
+    path: "PMDX Mt Thunder.mp3",
+    songName: "Mount Thunder - Pokemon Mystery Dungeon DX",
+  },
+  {
+    path: "Infinity.mp3",
+    songName: "Infinity",
+  },
+  {
+    path: "Shadow Fight 2 Wasp Theme.wav",
+    songName: "Ship Battle - Shadow Fight 2",
+  }
+];
+
+// Song Loading mechanism ~ selection of path and name
+function loadSong(songListElement) {
+  titleRef.textContent = songListElement.songName;
+  audioRef.src = songListElement.path;
+}
+loadSong(songList[currSongIndex]);
+//First loading -> future idea, ask for directory/db? to choose from where to load the songs
+
+// Buttons Functionality
+export function playSong() {
+  songPlaying = true;
+  playPauseBtnRef.classList.add('active');
+  playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
+  audioRef.play();        //! audio.play() is an async function by default
+}
+
+export function pauseSong() {
+  songPlaying = false;
+  playPauseBtnRef.classList.remove('active');
+  playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
+  audioRef.pause();
+  // console.log(audioRef.currentTime)
+}
+
+function prevSong() {
+  currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
+  loadSong(songList[currSongIndex]);
+  playSong();
+}
+
+function nextSong() {
+  currSongIndex < songList.length - 1 ? currSongIndex++ : currSongIndex = 0;
+  loadSong(songList[currSongIndex]);
+  playSong();
+}
+
+function playModeChange() {
+  currentModeIndex < playModes.length - 1 ? currentModeIndex++ : currentModeIndex = 0;
+  if(playModes[currentModeIndex] === 'stop') {
+    modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
+    modeBtnRef.classList.remove('innerActive');
+  }
+  else if(playModes[currentModeIndex] === 'loop-same') {
+    modeBtnRef.classList.add('innerActive');
+  } else if(playModes[currentModeIndex] === 'loop-all') {
+    modeBtnRef.innerHTML = '<ion-icon name="infinite-outline"></ion-icon>'; 
+  }
+}
+
+function onSongEnd() {
+  songPlaying = false;
+  playPauseBtnRef.classList.remove('active');
+  playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
   
-  // Local variables
-  let songPlaying = false;
-  let currSongIndex = 3;
-  let playModes = ['stop', 'loop-same', 'loop-all'];
-  let currentModeIndex = 0;
-  
-  // song list - idea for next versions -> use DB or API
-  const songList = [
-    {
-      path: "Choices The Bad Cop.mp3",
-      songName: "The Bad Cop - Choices",
-    },
-    {
-      path: "PLA Volo Theme.mp3",
-      songName: "Vs. Pokemon Wielder Volo",
-    },
-    {
-      path: "PMDX Mt Thunder.mp3",
-      songName: "Mount Thunder - Pokemon Mystery Dungeon DX",
-    },
-    {
-      path: "Infinity.mp3",
-      songName: "Infinity",
-    },
-    {
-      path: "Shadow Fight 2 Wasp Theme.wav",
-      songName: "Ship Battle - Shadow Fight 2",
-    }
-  ];
-  
-  // Song Loading mechanism ~ selection of path and name
-  function loadSong(songListElement) {
-    titleRef.textContent = songListElement.songName;
-    audioRef.src = songListElement.path;
-  }
-  loadSong(songList[currSongIndex]);  
-  //First loading -> future idea, ask for directory/db? to choose from where to load the songs
-  
-  // Buttons Functionality
-  function playSong() {
-    songPlaying = true;
-    playPauseBtnRef.classList.add('active');
-    playPauseBtnRef.innerHTML = '<ion-icon name="pause-outline"></ion-icon>';
-    audioRef.play();        //! audio.play() is an async function by default
-  }
-
-  function pauseSong() {
-    songPlaying = false;
-    playPauseBtnRef.classList.remove('active');
-    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
-    audioRef.pause();
-    // console.log(audioRef.currentTime)
-  }
-
-  function prevSong() {
-    currSongIndex > 0 ? currSongIndex-- : currSongIndex = songList.length - 1;
-    loadSong(songList[currSongIndex]);
-    playSong();
-  }
-
-  function nextSong() {
-    currSongIndex < songList.length - 1 ? currSongIndex++ : currSongIndex = 0;
-    loadSong(songList[currSongIndex]);
-    playSong();
-  }
-
-  function playModeChange() {
-    currentModeIndex < playModes.length - 1 ? currentModeIndex++ : currentModeIndex = 0;
-    if(playModes[currentModeIndex] === 'stop') {
-      modeBtnRef.innerHTML = '<ion-icon name="repeat-outline"></ion-icon>'; 
-      modeBtnRef.classList.remove('innerActive');
-    }
-    else if(playModes[currentModeIndex] === 'loop-same') {
-      modeBtnRef.classList.add('innerActive');
+  sliderOnSongEnd(); // to have a singular listener for ended with ensured correct order of execution
+  if(playModes[currentModeIndex] !== 'stop') {
+    if(playModes[currentModeIndex] === 'loop-same') {
+      playSong();
     } else if(playModes[currentModeIndex] === 'loop-all') {
-      modeBtnRef.innerHTML = '<ion-icon name="infinite-outline"></ion-icon>'; 
+      nextSong();
     }
   }
+}
 
-  function onSongEnd() {
-    songPlaying = false;
-    playPauseBtnRef.classList.remove('active');
-    playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
-    
-    sliderOnSongEnd(); // to have a singular listener for ended with ensured correct order of execution
-    if(playModes[currentModeIndex] !== 'stop') {
-      if(playModes[currentModeIndex] === 'loop-same') {
-        playSong();
-      } else if(playModes[currentModeIndex] === 'loop-all') {
-        nextSong();
-      }
-    }
-  }
-  
+
+function playerMech() {  
   // Event Listeners
   playPauseBtnRef.addEventListener('click', () => {
     songPlaying ? pauseSong() : playSong();   
@@ -118,7 +117,6 @@ function playerMech() {
 }
 
 playerMech();
-
 // TODO
 //- Replay Modes
 // Dark Mode

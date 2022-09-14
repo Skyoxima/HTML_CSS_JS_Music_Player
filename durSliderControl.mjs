@@ -1,3 +1,5 @@
+import { playSong, pauseSong } from "./player.mjs";
+
 const sliderRef = document.querySelector('.duration-slider');
 const sliderFillRef = document.querySelector('.durSliderFill');
 const audioRef = document.querySelector('audio');
@@ -107,11 +109,11 @@ function songChangeReset() {
 
 sliderRef.addEventListener('input', manualSliderControl);
 sliderRef.addEventListener('mousedown', () => {
-  audioRef.pause();
+  pauseSong();
 })
 sliderRef.addEventListener('mouseup', () => {
   if(playedOnce === true) {
-    audioRef.play();
+    playSong();
   }
 })
 if(audioRef.readyState > 0) { loadSongDataAndInit(); } 
