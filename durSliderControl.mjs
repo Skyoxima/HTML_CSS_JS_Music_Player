@@ -87,12 +87,8 @@ export function resetSliderValues() {
   prevSliderFillWidth = 0;
 }
 
-function sliderOnSongEnd() {
-  // This function ensures no minor visual error on the slider when the song has Ended
+export function sliderOnSongEnd() {
   clearInterval(autoIntervalRef);
-  sliderRef.value = audioDuration;
-  sliderFillRef.style.width = `${sliderWidth - thumbWidth}px`;
-
   hasSongEnded = true;
 }
 
@@ -109,7 +105,6 @@ if(audioRef.readyState > 0) { metaLoadingSong(); }
 else { audioRef.addEventListener('loadedmetadata', metaLoadingSong); }
 audioRef.addEventListener('playing', autoSliderControl);
 audioRef.addEventListener('pause', () => { clearInterval(autoIntervalRef) });
-audioRef.addEventListener('ended', sliderOnSongEnd);
 prevBtnRef.addEventListener('click', songChangeReset);
 nextBtnRef.addEventListener('click', songChangeReset);
 

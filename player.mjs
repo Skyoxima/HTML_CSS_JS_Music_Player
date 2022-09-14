@@ -1,5 +1,5 @@
 // importing function(s) from other sources
-import { resetSliderValues } from "./durSliderControl.mjs";
+import { resetSliderValues, sliderOnSongEnd } from "./durSliderControl.mjs";
 
 function playerMech() {
   // fetching DOM elements
@@ -94,12 +94,11 @@ function playerMech() {
     playPauseBtnRef.classList.remove('active');
     playPauseBtnRef.innerHTML = '<ion-icon name="play-outline"></ion-icon>';
     
+    sliderOnSongEnd(); // to have a singular listener for ended with ensured correct order of execution
     if(playModes[currentModeIndex] !== 'stop') {
       if(playModes[currentModeIndex] === 'loop-same') {
-        resetSliderValues();
         playSong();
       } else if(playModes[currentModeIndex] === 'loop-all') {
-        resetSliderValues();
         nextSong();
       }
     }
