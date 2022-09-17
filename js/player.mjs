@@ -1,7 +1,9 @@
 // importing function(s) from other sources
 import { sliderOnSongEnd } from "./durSliderControl.mjs";
 // fetching DOM elements
-const titleRef = document.querySelector('.title');
+const css = window.document.styleSheets[0];
+const titleDivRef = document.querySelector('.title');
+const titleRef = document.querySelector('.title .text');
 const prevBtnRef = document.querySelector('.prev');
 const playPauseBtnRef = document.querySelector('.playPause');
 const nextBtnRef = document.querySelector('.next');
@@ -9,23 +11,24 @@ const audioRef = document.querySelector('audio');
 const modeBtnRef = document.querySelector('.mode');
 
 let songPlaying = false;
-let currSongIndex = 3;
+let currSongIndex = 1;
 let playModes = ['stop', 'loop-same', 'loop-all'];
 let currentModeIndex = 0;
-
+let titleWidth = parseFloat(window.getComputedStyle(titleDivRef).getPropertyValue('width'));
+let textWidth = 0; 
 // song list - idea for next versions -> use DB or API
 const songList = [
   {
     path: "./music/Choices The Bad Cop.mp3",
-    songName: "The Bad Cop - Choices",
+    songName: "The Bad Cop - Most Wanted - Choices",
   },
   {
     path: "./music/PLA Volo Theme.mp3",
-    songName: "Vs. Pokemon Wielder Volo",
+    songName: "Vs. Pokemon Wielder Volo - Pokemon Legends: Arceus",
   },
   {
     path: "./music/PMDX Mt Thunder.mp3",
-    songName: "Mount Thunder - Pokemon Mystery Dungeon DX",
+    songName: "Mt. Thunder - Pokemon Mystery Dungeon Rescue Team DX",
   },
   {
     path: "./music/Infinity.mp3",
@@ -37,10 +40,33 @@ const songList = [
   }
 ];
 
+function isMarqueeable() {
+  if(textWidth > titleWidth) {
+    titleDivRef.style.overflow = 'hidden';
+    titleRef.innerText = titleRef.innerText + "\t\t\t" + titleRef.innerText
+    let newtextWidth = parseFloat(window.getComputedStyle(titleRef).getPropertyValue('width'));
+    console.log(newtextWidth);
+    titleRef.style.animation = 'marquee 10s linear infinite';
+    css.insertRule(`@keyframes marquee {
+      from {
+        transform: translateX(0);
+      } to {
+      transform: translateX(-${textWidth + (newtextWidth - 2 * textWidth)}px);
+    }
+  }`);
+  } else {
+    titleDivRef.style.justifyContent = 'center';
+    titleDivRef.style.textAlign = 'center';
+    titleRef.style.animation = 'none';
+  }
+}
 // Song Loading mechanism ~ selection of path and name
 function loadSong(songListElement) {
   titleRef.textContent = songListElement.songName;
   audioRef.src = songListElement.path;
+  textWidth = parseFloat(window.getComputedStyle(titleRef).getPropertyValue('width'));
+  isMarqueeable();
+  console.log(textWidth, titleWidth)
 }
 loadSong(songList[currSongIndex]);
 //First loading -> future idea, ask for directory/db? to choose from where to load the songs
@@ -119,7 +145,7 @@ function playerMech() {
 playerMech();
 // TODO
 //- Replay Modes
-// Dark Mode
+//- Dark Mode
 // Glow Ring (From a previous project)
 // Song Title Marquee
 // Understand Event Loop properly (had curiousity about same eventListeners order of execution)

@@ -87,10 +87,15 @@ body.dark .main-icon ion-icon {
 }
 
 .music .title {
+  width: 300px;
   display: inline-flex;
+  /* justify-content: center; */
   margin-bottom: 10px;
 
-  text-align: center;
+  white-space: pre;
+  /* text-align: center; */
+  /* overflow: hidden; */
+  
   font-weight: 400;
   font-size: 1.2em;
   color: var(--lt-player-highlight-1);
@@ -98,3 +103,12 @@ body.dark .main-icon ion-icon {
 body.dark .music .title {
   color: var(--dk-player-highlight-1);
 }
+
+/* @keyframes marquee {
+  from {
+    transform: translateX(0);
+  } to {
+    transform: translateX(-421px);
+  }
+} */
+/* if text width > container's fix width then marquee */
