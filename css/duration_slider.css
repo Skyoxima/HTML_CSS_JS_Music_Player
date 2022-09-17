@@ -1,0 +1,120 @@
+/* @import url("./colors_root.css"); */
+
+.music .durSliderTxt {
+  position: relative;
+  width: 300px;
+  margin-bottom: 10px;
+  display: flex; justify-content: space-between;
+  
+  font-size: 12px;
+  font-weight: 200;
+  color: var(--lt-button-shadow-grdn-d);
+}
+body.dark .music .durSliderTxt{
+  color: var(--dk-player-highlight-1);
+}
+
+.music .duration {
+  position: relative;
+  width: 300px; height: calc(var(--slider-height) + 15px);
+  margin-bottom: 10px;
+}
+
+.music .duration .duration-slider {
+  appearance: none;
+  outline: none;
+
+  position: absolute;
+  top: 0;
+  width: 300px;
+  height: var(--slider-height);
+
+  border-radius: 15px;
+  background: var(--lt-player-bg);
+  box-shadow: 
+  inset 0 2px 2px var(--lt-button-shadow),
+  inset 0 -1px 1px #ffffffa2;
+}
+body.dark .music .duration .duration-slider {
+  background: var(--dk-player-bg-grdn-l);
+  box-shadow: 
+  inset 0 2px 2px black,
+  inset 0 -1px 1px rgb(80, 80, 80);;
+}
+
+.music .duration .duration-slider::-webkit-slider-thumb {
+  appearance: none;
+  cursor: pointer;
+  
+  position: relative;
+  z-index: 99;
+  width: var(--thumb-dimension);
+  height: var(--thumb-dimension);
+
+  background: radial-gradient(
+    var(--lt-player-bg) 0%, 
+    var(--lt-player-bg) 30%, 
+    var(--lt-player-highlight-1) 35%
+    );
+  border: 1px solid var(--lt-player-highlight-1);
+  border-radius: 50%;
+  
+  box-shadow: 
+  -2px -2px 5px rgba(255, 255, 255, 0.3),
+  2px 2px 5px rgba(0, 0, 0, 0.15),
+  inset -1px -1px 2px rgba(255, 255, 255, .1),
+  inset 1px 1px 2px rgba(255, 255, 255, .1);
+}
+body.dark .music .duration .duration-slider::-webkit-slider-thumb {
+  background: radial-gradient(
+    var(--dk-player-highlight-1) 0%, 
+    var(--dk-player-highlight-1) 30%, 
+    var(--dk-body-bg) 35%
+    );
+  border: 1px solid var(--dk-player-highlight-1);
+  box-shadow: 
+  -2px -2px 4px rgba(200, 200, 200, 0.2),
+  2px 2px 4px rgba(0, 0, 0, 0.9),
+  inset -1px -1px 2px rgba(200, 200, 200, .1),
+  inset 1px 1px 2px rgba(200, 200, 200, .1)
+}
+
+body.dark .music .duration .duration-slider:active::-webkit-slider-thumb,
+.music .duration .duration-slider:active::-webkit-slider-thumb {
+  box-shadow: 
+  inset -5px -5px 5px rgba(255, 255, 255, 0.15),
+  inset 5px 5px 5px rgba(0, 0, 0, 0.1);
+}
+
+.music .duration .durSliderFill {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--thumb-dimension) / 2);
+  height: calc(var(--slider-height));
+
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background: var(--lt-player-highlight-1);
+  
+  pointer-events: none;      /*? it's stacked above the slider which obstrcuted tap-events when filling was non-zero, this makes sliderFill 'pass-through' for events, event will be therefore triggered on the slider */
+}
+body.dark .music .duration .durSliderFill {
+  background: var(--dk-player-highlight-1);
+}
+
+.music .duration .durSliderFill::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: calc(-1 * var(--thumb-dimension) / 2);
+  width: calc(var(--thumb-dimension) / 2);
+  height: var(--slider-height);
+  
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background: var(--lt-player-highlight-1);
+}
+body.dark .music .duration .durSliderFill::before {
+  background: var(--dk-player-highlight-1);
+}

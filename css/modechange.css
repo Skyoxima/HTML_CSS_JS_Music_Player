@@ -1,0 +1,65 @@
+.theme {
+  position: absolute;
+  top: 5%; left: 90%;
+  width: 50px; height: 50px;
+  display: flex; justify-content: center; align-items: center;
+  
+  color: var(--lt-player-highlight-1);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: radial-gradient(
+      var(--lt-player-bg), 
+      var(--lt-player-bg)
+    ) padding-box,
+    radial-gradient(
+      var(--lt-player-highlight-1) 0%,
+      var(--lt-player-highlight-1) 60%,
+      var(--lt-player-bg) 70%
+    ) border-box;
+
+  box-shadow: 
+  -5px -5px 10px rgba(255, 255, 255, .95),
+  5px 5px 10px rgba(173, 187, 211, .65),
+  inset 7px 7px 8px rgba(255, 255, 255, 0.9),
+  inset -2px -2px 8px rgba(255, 255, 255, 0.9);
+    
+  overflow: hidden;
+  cursor: pointer;
+}
+body.dark .theme {
+  color: var(--dk-player-highlight-1);
+  background: radial-gradient(
+      var(--dk-player-bg-grdn-d), 
+      var(--dk-player-bg-grdn-d)
+    ) padding-box,
+    radial-gradient(
+      var(--dk-player-highlight-1) 0%,
+      var(--dk-player-highlight-1) 60%,
+      var(--dk-player-bg-grdn-d) 70%
+    ) border-box;
+  box-shadow: 
+  -4px -4px 8px rgba(200, 200, 200, 0.2),
+  4px 8px 8px rgba(0, 0, 0, 0.7),
+  inset 7px 7px 8px rgba(200, 200, 200, 0.1),
+  inset -2px -2px 8px rgba(200, 200, 200, 0.1);
+}
+
+.theme ion-icon {
+  position: absolute;
+  font-size: 1.75em;
+  transition: transform 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+body .theme.light .sun {
+  transform: translateY(0);
+}
+body.dark .theme.dark .sun {
+  transform: translateY(50px);
+}
+
+body .theme.light .moon {
+  transform: translateY(-50px);
+}
+body.dark .theme.dark .moon {
+  transform: translateY(0px);
+}

@@ -6,12 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Neumorphism Music Player (Functional)</title>
     <link rel="icon" href="data:;base64,iVBORwOKGO=" />
-    <link rel="stylesheet" href="player_light.css">
-    <link rel="stylesheet" href="player_dark.css">
+    <link rel="stylesheet" href="./css/super.css">
   </head>
 
-  <body>
-    <div class="theme"></div>
+  <body class="dark">
+    <!-- <body> -->
+    <div class="theme dark" id="theme-selector">
+      <ion-icon name="sunny-outline" class="sun"></ion-icon>
+      <ion-icon name="moon-outline" class="moon"></ion-icon>
+    </div>
     <div class="music">
       <div class="volume">
         <span class="sliderIcon" id="vol-icon"><ion-icon name="volume-high-outline"></ion-icon></span>
@@ -42,9 +45,10 @@
       </div>
     </div>
     
-    <script type="module" src="player.mjs"></script>
-    <script type="module" src="durSliderControl.mjs"></script>
-    <script src="volSliderManualControl.js"></script>
+    <script type="module" src="./js/player.mjs"></script>
+    <script type="module" src="./js/durSliderControl.mjs"></script>
+    <script src="./js/volSliderManualControl.js"></script>
+    <script src="./js/modechange.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   </body>

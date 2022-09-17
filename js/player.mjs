@@ -16,23 +16,23 @@ let currentModeIndex = 0;
 // song list - idea for next versions -> use DB or API
 const songList = [
   {
-    path: "Choices The Bad Cop.mp3",
+    path: "./music/Choices The Bad Cop.mp3",
     songName: "The Bad Cop - Choices",
   },
   {
-    path: "PLA Volo Theme.mp3",
+    path: "./music/PLA Volo Theme.mp3",
     songName: "Vs. Pokemon Wielder Volo",
   },
   {
-    path: "PMDX Mt Thunder.mp3",
+    path: "./music/PMDX Mt Thunder.mp3",
     songName: "Mount Thunder - Pokemon Mystery Dungeon DX",
   },
   {
-    path: "Infinity.mp3",
+    path: "./music/Infinity.mp3",
     songName: "Infinity",
   },
   {
-    path: "Shadow Fight 2 Wasp Theme.wav",
+    path: "./music/Shadow Fight 2 Wasp Theme.wav",
     songName: "Ship Battle - Shadow Fight 2",
   }
 ];

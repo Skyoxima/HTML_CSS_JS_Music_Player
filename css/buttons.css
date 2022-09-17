@@ -1,0 +1,145 @@
+.music .player {
+  position: relative;
+  width: 400px;
+  padding: 10px 20px;
+
+  border: 1px solid var(--lt-player-bg);
+  border-radius: 80px;
+  box-shadow: 
+  -5px -5px 10px rgba(255, 255, 255, 1),
+  5px 5px 10px rgba(173, 187, 211, .9),
+  inset 6px 3px 10px rgba(255, 255, 255, .75);
+}
+body.dark .music .player {
+  border: 1px solid var(--dk-big-button-border-grdn-d);
+  box-shadow:
+  -5px -5px 10px rgba(200, 200, 200, 0.2),
+  5px 5px 10px rgba(0, 0, 0),
+  inset 6px 3px 10px rgba(200, 200, 200, 0.2);;
+}
+
+.music .player .buttons {
+  position: relative;
+  width: 100%;
+
+  display: flex; justify-content: space-evenly; align-items: center;
+}
+
+.music .player .buttons span ion-icon {
+  font-size: 1.25em;
+}
+
+.music .player .buttons span.playPause ion-icon {
+  font-size: 1.75em;
+}
+
+.music .player .buttons span {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex; justify-content: center; align-items: center;
+
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background: radial-gradient(
+      var(--lt-player-bg), 
+      var(--lt-player-bg)
+    ) padding-box,
+    radial-gradient(
+      var(--lt-player-highlight-1) 0%,
+      var(--lt-player-highlight-1) 60%,
+      var(--lt-player-bg) 70%
+    ) border-box;
+
+  box-shadow: 
+  -5px -5px 10px rgba(255, 255, 255, .95),
+  5px 5px 10px rgba(173, 187, 211, .65),
+  inset 7px 7px 8px rgba(255, 255, 255, 0.9),
+  inset -2px -2px 8px rgba(255, 255, 255, 0.9);
+    
+  color: var(--lt-player-highlight-1);
+  cursor: pointer;
+  transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);  
+}
+body.dark .music .player .buttons span {
+  color: var(--dk-player-highlight-1);
+  background: radial-gradient(
+      var(--dk-player-bg-grdn-d), 
+      var(--dk-player-bg-grdn-d)
+    ) padding-box,
+    radial-gradient(
+      var(--dk-player-highlight-1) 0%,
+      var(--dk-player-highlight-1) 60%,
+      var(--dk-player-bg-grdn-d) 70%
+    ) border-box;
+  box-shadow: 
+  -4px -4px 8px rgba(200, 200, 200, 0.2),
+  4px 8px 8px rgba(0, 0, 0),
+  inset 7px 7px 8px rgba(200, 200, 200, 0.1),
+  inset -2px -2px 8px rgba(200, 200, 200, 0.1);
+}
+
+.music .player .buttons span:active,
+.music .player .buttons span.active {
+  color: var(--lt-player-bg);
+  border: 1px solid transparent;
+  background: linear-gradient(
+      var(--lt-player-highlight-1), 
+      var(--lt-player-highlight-1)
+    ) padding-box,
+    linear-gradient(
+      to bottom right, 
+      #758dfb, 
+      #90adfe
+    ) border-box;
+  box-shadow: 
+  inset 5px 5px 10px rgba(98, 135, 255, 1),
+  inset -1px -1px 5px rgba(98, 135, 255, 0.5),
+  7px 7px 10px rgba(255, 255, 255, .9),
+  -7px -7px 10px rgba(0, 0, 0, 0.1);
+}
+body.dark .music .player .buttons span:active,
+body.dark .music .player .buttons span.active {
+  color: var(--dk-player-bg-grdn-d);
+  border: 1px solid var(--dk-player-highlight-1);
+  background: var(--dk-player-highlight-1);
+  box-shadow: 
+  inset 5px 5px 10px hsla(var(--dk-button-shadow-grdn-d), 0.9),
+  inset -1px -1px 5px hsla(var(--dk-button-shadow-grdn-l), 0.9),
+  5px 5px 10px rgba(200, 200, 200, .2),
+  -5px -5px 10px rgba(0, 0, 0, 0.9);
+}
+
+.music .player .buttons span.mode {
+  color: grey;
+}
+
+.music .player .buttons span.mode:active,
+.music .player .buttons span.mode.innerActive {
+  color: var(--lt-player-bg);
+  background: linear-gradient(
+      var(--lt-player-highlight-1), 
+      var(--lt-player-highlight-1)
+    ) padding-box,
+    linear-gradient(
+      to bottom right, 
+      #758dfb, 
+      #90adfe
+    ) border-box;
+    
+  box-shadow: 
+  inset 5px 5px 10px rgba(98, 135, 255, 1),
+  inset -1px -1px 5px rgba(98, 135, 255, 0.5),
+  7px 7px 10px rgba(255, 255, 255, .9),
+  -7px -7px 10px rgba(0, 0, 0, 0.1); 
+}
+body.dark .music .player .buttons span.mode:active,
+body.dark .music .player .buttons span.mode.innerActive {
+  color: white;
+  background: var(--dk-player-highlight-1);
+  box-shadow: 
+  inset 5px 5px 10px hsla(18, 87%, 25%, 0.9),
+  inset -1px -1px 5px hsla(18, 93%, 66%, 0.9),
+  5px 5px 10px rgba(200, 200, 200, .2),
+  -5px -5px 10px rgba(0, 0, 0, 0.9);
+}

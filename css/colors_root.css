@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+
+:root {
+  /* Colors */
+
+  --lt-body-bg: #d3e1f7;
+  --dk-body-bg: #26282b;
+
+  --lt-player-bg: #e8f1fc;
+  --lt-player-border: hsl(213, 77%, 96%);
+  --lt-player-highlight-1: #86a5ff;
+
+  --dk-player-bg-grdn-l: #343a3f;
+  --dk-player-bg-grdn-d: #181a1d;
+  --dk-player-border: #424750;
+  --dk-player-highlight-1: #ee520f;
+
+  --lt-big-button-border-grdn-d: #c4cfe0;
+  --lt-big-button-border-grdn-l: #e5eefe;
+  --dk-big-button-border-grdn-l: #7c7d7d;
+  --dk-big-button-border-grdn-d: #121315;
+
+  --lt-button-border: #dfe9fa;
+  --lt-button-shadow: rgba(173, 187, 211, 1);
+
+  --lt-button-border-grdn-d: #758dfb;
+  --lt-button-border-grdn-l: #90adfe;
+  
+  --lt-button-shadow-grdn-d: rgba(98, 135, 255, 1);
+  --lt-button-shadow-grdn-l: hsl(226, 63%, 89%);
+  --dk-button-shadow-grdn-d: 18, 87%, 25%;
+  --dk-button-shadow-grdn-l: 18, 93%, 66%; /* This will be used in a rgba/hsla along with different alphas */
+
+  /* Dimensions */
+  --slider-width: 300px;
+  --slider-height: 5px;
+  --thumb-dimension: 15px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", sans-serif;
+}
