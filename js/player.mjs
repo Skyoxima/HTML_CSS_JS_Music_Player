@@ -1,9 +1,10 @@
 // importing function(s) from other sources
 import { sliderOnSongEnd } from "./durSliderControl.mjs";
+
 // fetching DOM elements
-const css = window.document.styleSheets[0];
+const sheet = window.document.styleSheets[0];
 const titleDivRef = document.querySelector('.title');
-const titleRef = document.querySelector('.title .text');
+const titleTextRef = document.querySelector('.title .text');
 const prevBtnRef = document.querySelector('.prev');
 const playPauseBtnRef = document.querySelector('.playPause');
 const nextBtnRef = document.querySelector('.next');
@@ -14,8 +15,8 @@ let songPlaying = false;
 let currSongIndex = 1;
 let playModes = ['stop', 'loop-same', 'loop-all'];
 let currentModeIndex = 0;
-let titleWidth = parseFloat(window.getComputedStyle(titleDivRef).getPropertyValue('width'));
-let textWidth = 0; 
+const titleDivWidth = parseFloat(window.getComputedStyle(titleDivRef).getPropertyValue('width'));
+let titleTextWidth = 0; 
 // song list - idea for next versions -> use DB or API
 const songList = [
   {
@@ -41,32 +42,38 @@ const songList = [
 ];
 
 function isMarqueeable() {
-  if(textWidth > titleWidth) {
+titleTextWidth = parseFloat(window.getComputedStyle(titleTextRef).getPropertyValue('width'));  
+  if(titleTextWidth > titleDivWidth) {
     titleDivRef.style.overflow = 'hidden';
-    titleRef.innerText = titleRef.innerText + "\t\t\t" + titleRef.innerText
-    let newtextWidth = parseFloat(window.getComputedStyle(titleRef).getPropertyValue('width'));
-    console.log(newtextWidth);
-    titleRef.style.animation = 'marquee 10s linear infinite';
-    css.insertRule(`@keyframes marquee {
+    titleDivRef.style.justifyContent = 'start';
+    titleDivRef.style.textAlign = 'left';
+    titleTextRef.style.animation = 'none';
+
+    titleTextRef.innerText = titleTextRef.innerText + "\t\t\t" + titleTextRef.innerText
+    let newTextWidth = parseFloat(window.getComputedStyle(titleTextRef).getPropertyValue('width'));
+    console.log(titleTextWidth, newTextWidth)
+    sheet.insertRule(`@keyframes marquee {
       from {
         transform: translateX(0);
       } to {
-      transform: translateX(-${textWidth + (newtextWidth - 2 * textWidth)}px);
+      transform: translateX(-${titleTextWidth + (newTextWidth - 2 * titleTextWidth)}px); 
     }
-  }`);
+  }`, sheet.cssRules.length); 
+  //~ newWidth - 2x oldWidth will give the size of the 3 tabs,
+  //~ the marquee (translateX) has to happen such that the duplicate text gains the position (exact) of the OG text and then the loop-reset happens which is invisble and we perceive a perfect marquee
+    titleTextRef.style.animation = `marquee 20s linear infinite`;
+    titleTextRef.style.animationDelay = '1s';
   } else {
     titleDivRef.style.justifyContent = 'center';
     titleDivRef.style.textAlign = 'center';
-    titleRef.style.animation = 'none';
+    titleTextRef.style.animation = 'none';
   }
 }
 // Song Loading mechanism ~ selection of path and name
 function loadSong(songListElement) {
-  titleRef.textContent = songListElement.songName;
+  titleTextRef.textContent = songListElement.songName;
   audioRef.src = songListElement.path;
-  textWidth = parseFloat(window.getComputedStyle(titleRef).getPropertyValue('width'));
   isMarqueeable();
-  console.log(textWidth, titleWidth)
 }
 loadSong(songList[currSongIndex]);
 //First loading -> future idea, ask for directory/db? to choose from where to load the songs
