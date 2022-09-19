@@ -22,10 +22,10 @@
   position: relative;
   display: block;
   width: 100%;
-  height: 100px;
+  height: 8vh;
 }
 .bg-elements .wb-2 svg {
-  height: 120px;
+  height: 10vh;
 }
 
 .bg-elements .wave-bottom .shape-fill {

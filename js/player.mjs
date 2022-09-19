@@ -16,7 +16,10 @@ let currSongIndex = 1;
 let playModes = ['stop', 'loop-same', 'loop-all'];
 let currentModeIndex = 0;
 const titleDivWidth = parseFloat(window.getComputedStyle(titleDivRef).getPropertyValue('width'));
-let titleTextWidth = 0; 
+let animRate = 28.3855;
+let animDuration = 0; 
+let titleTextWidth = 0;
+let toMarqueeWidth = 0
 // song list - idea for next versions -> use DB or API
 const songList = [
   {
@@ -49,19 +52,21 @@ titleTextWidth = parseFloat(window.getComputedStyle(titleTextRef).getPropertyVal
     titleDivRef.style.textAlign = 'left';
     titleTextRef.style.animation = 'none';
 
-    titleTextRef.innerText = titleTextRef.innerText + "\t\t\t" + titleTextRef.innerText
+    titleTextRef.innerText = titleTextRef.innerText + "\t\t\t" + titleTextRef.innerText;
     let newTextWidth = parseFloat(window.getComputedStyle(titleTextRef).getPropertyValue('width'));
-    console.log(titleTextWidth, newTextWidth)
+    console.log(titleTextWidth, newTextWidth);
+    toMarqueeWidth = titleTextWidth + (newTextWidth - 2 * titleTextWidth);
+    animDuration = animRate * (toMarqueeWidth / 567.71);
     sheet.insertRule(`@keyframes marquee {
       from {
         transform: translateX(0);
       } to {
-      transform: translateX(-${titleTextWidth + (newTextWidth - 2 * titleTextWidth)}px); 
+      transform: translateX(-${toMarqueeWidth}px); 
     }
   }`, sheet.cssRules.length); 
   //~ newWidth - 2x oldWidth will give the size of the 3 tabs,
   //~ the marquee (translateX) has to happen such that the duplicate text gains the position (exact) of the OG text and then the loop-reset happens which is invisble and we perceive a perfect marquee
-    titleTextRef.style.animation = `marquee 20s linear infinite`;
+    titleTextRef.style.animation = `marquee ${animDuration}s linear infinite`;
     titleTextRef.style.animationDelay = '1s';
   } else {
     titleDivRef.style.justifyContent = 'center';
@@ -154,7 +159,7 @@ playerMech();
 //- Replay Modes
 //- Dark Mode
 // Glow Ring (From a previous project)
-// Song Title Marquee
+//- Song Title Marquee
 // Understand Event Loop properly (had curiousity about same eventListeners order of execution)
 
 //* ------ From playSong function (resolved) ------
