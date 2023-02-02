@@ -22,8 +22,8 @@ body.dark {
   border: 4px solid var(--lt-player-border);
   border-radius: 40px;
 
-  box-shadow: 10px 10px 25px rgba(56, 60, 66, 0.3),
-  -10px -10px 25px rgba(255, 255, 255, 0.6),
+  box-shadow: 20px 20px 25px rgba(45, 66, 97, 0.3),
+  -20px -20px 25px rgba(255, 255, 255, 0.6),
   inset 10px 10px 20px rgba(255, 255, 255, 0.6);
 }
 body.dark .music {
@@ -46,10 +46,19 @@ body.dark .music {
   border: 4px solid var(--lt-player-bg);
   border-radius: 50%;
   box-shadow:
-  inset 5px 5px 10px rgba(130, 154, 183, 0.55),
-  inset -5px -5px 10px rgba(255, 255, 255, .55),
-  10px 10px 15px rgba(130, 154, 183, 0.55),
-  -10px -10px 15px rgba(255, 255, 255);
+  inset 15px 15px 15px black,
+  inset -5px -5px 0px rgba(200, 200, 200, .1),
+  10px 10px 20px rgba(130, 154, 183, 0.55),
+  -10px -10px 20px rgba(255, 255, 255);
+}
+body.dark .music .main-icon-container {
+  border: 5px solid transparent;
+
+  box-shadow: 
+  inset 15px 15px 10px black,
+  inset -5px -5px 5px rgba(200, 200, 200, .1),
+  10px 10px 20px rgba(0, 0, 0, 0.75),
+  -10px -10px 20px rgba(200, 200, 200, 0.25);
 }
 
 .music .main-icon-container .spinner {
@@ -58,9 +67,14 @@ body.dark .music {
   z-index: -1;
   width: 100%; height: 100%;
   border-radius: 50%;
-  background: linear-gradient(#4e4376, #2b5876);
-  filter: blur(20px);
+  /* background: linear-gradient(#FCF3E8, #FFE086, #FCF3E8); */
+  background: linear-gradient(black, var(--dk-player-highlight-1), black);
+  /* background: linear-gradient(var(--dk-player-highlight-1), black, var(--dk-player-highlight-1)); */
+  filter: blur(10px);
   animation: spin 10s linear infinite;
+}
+body.dark .main-icon-container .spinner {
+  background: linear-gradient(black, grey, black);
 }
 
 @keyframes spin {
@@ -71,45 +85,26 @@ body.dark .music {
   }
 }
 
-.music .main-icon-container::after {
-  content: '';
-  position: absolute;
-  width: 50%; height: 50%;
-  border-radius: 50%;
-  border: 3px solid var(--lt-player-bg);
-}
-
 .music .main-icon-container .main-icon {
   width: 110px;
   height: 110px;
   display: flex; justify-content: center; align-items: center;
 
-  /*! New way to apply GRADIENT BORDERS! */
   background: var(--lt-player-highlight-1);  
-  border: 2px solid var(--lt-player-highlight-1);
   border-radius: 50%;
-
-  box-shadow: 
-  inset 3px 3px 5px rgba(255, 255, 255, 0.35),
-  inset -3px -3px 5px rgba(98, 135, 255, 0.9);
+  border: 3px solid var(--lt-player-bg);
+  box-shadow:
+  inset 5px 5px 10px #6188ff,
+  inset -5px -5px 10px #b9d7fc,
+  0 0 10px 3px rgba(0, 0, 0, 0.3);
 }
 body.dark .music .main-icon-container .main-icon {
-  background: linear-gradient(
-      var(--dk-player-highlight-1), 
-      var(--dk-player-highlight-1)
-    ) padding-box,
-    linear-gradient(
-      to top left,  
-      var(--dk-big-button-border-grdn-d),
-      var(--dk-big-button-border-grdn-l)
-    ) border-box;
-
+  background: var(--dk-player-highlight-1);
+  border: 4px solid rgb(55, 55, 55);
   box-shadow: 
-  inset 2px 2px 4px hsla(var(--dk-button-shadow-grdn-d), 0.9),
-  inset 5px 5px 10px hsla(var(--dk-button-shadow-grdn-l), 0.9),
-  inset -5px -5px 10px hsla(var(--dk-button-shadow-grdn-d), 0.9),
-  10px 10px 15px rgba(0, 0, 0, 0.6),
-  -10px -10px 15px rgba(200, 200, 200, 0.2);;
+  inset 5px 5px 10px hsla(var(--dk-button-shadow-grdn-d), 0.9),
+  inset -5px -5px 10px hsla(var(--dk-button-shadow-grdn-l), 0.9),
+  0 0 10px 3px rgba(0, 0, 0, 0.3);
 }
 
 .music .main-icon-container .main-icon ion-icon {

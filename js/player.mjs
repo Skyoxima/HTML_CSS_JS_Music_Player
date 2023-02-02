@@ -158,7 +158,7 @@ playerMech();
 // TODO
 //- Replay Modes
 //- Dark Mode
-// Glow Ring (From a previous project)
+//- Glow Ring (From a previous project)
 //- Song Title Marquee
 // Understand Event Loop properly (had curiousity about same eventListeners order of execution)
 
